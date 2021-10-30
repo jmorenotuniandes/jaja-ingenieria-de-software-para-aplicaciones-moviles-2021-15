@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Vinilos</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_home">Vinilos</string>
+    <string name="title_dashboard">Vinilos</string>
+    <string name="title_notifications">Vinilos</string>
     <string name="title_artistas">Artistas</string>
     <string name="title_albumes">Albumes</string>
     <string name="title_coleccionistas">Coleccionistas</string>
