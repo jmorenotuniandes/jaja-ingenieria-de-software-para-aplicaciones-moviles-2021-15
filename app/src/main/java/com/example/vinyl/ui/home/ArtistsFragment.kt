@@ -1,4 +1,4 @@
-package com.example.jaja_ingenieria_de_software_para_aplicaciones_moviles_2021_15.ui.home
+package com.example.vinyl.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,13 +8,13 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.jaja_ingenieria_de_software_para_aplicaciones_moviles_2021_15.R
-import com.example.jaja_ingenieria_de_software_para_aplicaciones_moviles_2021_15.databinding.FragmentHomeBinding
+import com.example.vinyl.databinding.FragmentArtistsBinding
+import com.example.vinyl.viewmodel.ArtistsViewModel
 
-class HomeFragment : Fragment() {
+class ArtistsFragment : Fragment() {
 
-    private lateinit var homeViewModel: HomeViewModel
-    private var _binding: FragmentHomeBinding? = null
+    private lateinit var artistsViewModel: ArtistsViewModel
+    private var _binding: FragmentArtistsBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -25,14 +25,14 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+        artistsViewModel =
+            ViewModelProvider(this).get(ArtistsViewModel::class.java)
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentArtistsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
+        artistsViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root
