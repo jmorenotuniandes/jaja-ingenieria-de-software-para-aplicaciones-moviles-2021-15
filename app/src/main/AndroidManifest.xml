@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.jaja_ingenieria_de_software_para_aplicaciones_moviles_2021_15">
 
+    <uses-sdk
+        android:minSdkVersion="21"
+        android:targetSdkVersion="28"
+        android:maxSdkVersion="29">
+    </uses-sdk>
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_baseline_album_24"
@@ -9,6 +15,7 @@
         android:roundIcon="@drawable/ic_baseline_album_24"
         android:supportsRtl="true"
         android:theme="@style/Theme.Jajaingenieriadesoftwareparaaplicacionesmoviles202115">
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
