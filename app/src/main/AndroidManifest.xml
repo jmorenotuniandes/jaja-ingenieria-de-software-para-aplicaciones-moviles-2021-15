@@ -16,7 +16,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Jajaingenieriadesoftwareparaaplicacionesmoviles202115">
 
-
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -28,7 +27,5 @@
             </intent-filter>
         </activity>
     </application>
-
-
 
 </manifest>
