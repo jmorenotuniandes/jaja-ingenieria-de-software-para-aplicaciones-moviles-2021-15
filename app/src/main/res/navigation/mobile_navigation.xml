@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_artists">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.example.jaja_ingenieria_de_software_para_aplicaciones_moviles_2021_15.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_artists"
+        android:name="com.example.vinyl.ui.home.ArtistsFragment"
+        android:label="@string/title_artists"
+        tools:layout="@layout/fragment_artists" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.jaja_ingenieria_de_software_para_aplicaciones_moviles_2021_15.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_albums"
+        android:name="com.example.vinyl.ui.albums.AlbumsFragment"
+        android:label="@string/title_albums"
+        tools:layout="@layout/fragment_albums" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.jaja_ingenieria_de_software_para_aplicaciones_moviles_2021_15.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_collectors"
+        android:name="com.example.vinyl.ui.collectors.CollectorsFragment"
+        android:label="@string/title_collectors"
+        tools:layout="@layout/fragment_collectors" />
 </navigation>

@@ -1,10 +1,12 @@
-package com.example.jaja_ingenieria_de_software_para_aplicaciones_moviles_2021_15.ui.home
+package com.example.vinyl.viewmodel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class HomeViewModel : ViewModel() {
+class ArtistsViewModel (application: Application) : AndroidViewModel(application) {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is home Fragment"

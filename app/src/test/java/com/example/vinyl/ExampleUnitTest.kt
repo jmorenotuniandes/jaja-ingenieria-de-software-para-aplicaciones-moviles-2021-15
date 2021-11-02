@@ -1,4 +1,4 @@
-package com.example.jaja_ingenieria_de_software_para_aplicaciones_moviles_2021_15
+package com.example.vinyl
 
 import org.junit.Test
 
