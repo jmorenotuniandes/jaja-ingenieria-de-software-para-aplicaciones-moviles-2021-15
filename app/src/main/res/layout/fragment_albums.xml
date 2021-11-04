@@ -78,7 +78,10 @@
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/outlinedTextFieldAlbumsRegistrar"
-        tools:listitem="@layout/album_item" />
+        tools:listitem="@layout/album_item"
+
+        />
+
 
 
 
