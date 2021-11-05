@@ -15,7 +15,8 @@
         app:rippleColor="@color/yellow"
         app:cardElevation="10dp"
         app:cardCornerRadius="0dp"
-        app:strokeColor="@color/yellow">
+        app:strokeColor="@color/black"
+        android:background="@color/secondaryColor">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -23,7 +24,7 @@
             android:orientation="horizontal"
             android:paddingRight="8dp"
             android:paddingLeft="8dp"
-            android:background="@color/list_contrast_bg">
+            android:id="@+id/album_item_wrapper">
 
             <TextView
                 android:id="@+id/collector_item_name"
