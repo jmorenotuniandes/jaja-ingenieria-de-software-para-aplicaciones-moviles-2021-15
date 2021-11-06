@@ -41,11 +41,10 @@ class NetworkServiceAdapter constructor(context: Context) {
                     val list = mutableListOf<Album>()
                     for (i in 0 until resp.length()) {
                         val item = resp.getJSONObject(i)
-                        var color = if (i % 2 == 0) R.color.white else R.color.list_contrast_bg
                         list.add(i, Album(
                             albumId = item.getInt("id"),
                             name = item.getString("name"),
-                            bgColor = color
+                            bgColor = getBgColor(i)
                         ))
                     }
                     onComplete(list)
@@ -171,5 +170,9 @@ class NetworkServiceAdapter constructor(context: Context) {
             responseListener,
             errorListener
         )
+    }
+
+    private fun getBgColor(index:Int): String {
+        return if (index % 2 == 0) "#FFFFFF" else "#F1F1F1"
     }
 }

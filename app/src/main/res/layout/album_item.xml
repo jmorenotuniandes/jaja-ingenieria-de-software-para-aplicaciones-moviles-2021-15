@@ -12,7 +12,11 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        app:cardCornerRadius="0dp">
+        app:rippleColor="@color/yellow"
+        app:cardElevation="10dp"
+        app:cardCornerRadius="0dp"
+        app:strokeColor="@color/black"
+        android:background="@color/secondaryColor">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -20,7 +24,7 @@
             android:orientation="horizontal"
             android:paddingRight="8dp"
             android:paddingLeft="8dp"
-            android:background="@color/list_contrast_bg">
+            android:id="@+id/album_item_wrapper">
 
             <TextView
                 android:id="@+id/collector_item_name"
@@ -34,15 +38,15 @@
 
             <Space
                 android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1"></Space>
+                android:layout_height="0.5dp"
+                android:layout_weight="0.5"></Space>
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:contentDescription="Details Icon"
                 android:gravity="center_horizontal|center_vertical"
-                android:src="@drawable/ic_baseline_headset_24" />
+                android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
 
         </LinearLayout>
 

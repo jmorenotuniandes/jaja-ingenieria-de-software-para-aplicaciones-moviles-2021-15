@@ -3,4 +3,7 @@
     <string name="title_artists">Artists</string>
     <string name="title_albums">Albums</string>
     <string name="title_collectors">Collectors</string>
+    <string name="search">Search</string>
+    <string name="add_new_album">ADD A NEW ALBUM</string>
+    <string name="add_new_album_legend">Don\'t find the album you are searching for? You can add a new one in our system.</string>
 </resources>

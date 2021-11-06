@@ -3,6 +3,7 @@ package com.example.vinyl.viewmodel
 import android.app.Application
 import androidx.lifecycle.*
 import com.example.vinyl.model.dto.Album
+import com.example.vinyl.repository.AlbumsRepository
 import com.example.vinyls_jetpack_application.network.NetworkServiceAdapter
 
 class AlbumsViewModel(application: Application) : AndroidViewModel(application) {
@@ -19,12 +20,14 @@ class AlbumsViewModel(application: Application) : AndroidViewModel(application) 
     val isNetworkErrorShown: LiveData<Boolean>
         get() = _isNetworkErrorShown
 
+    private var albumsRepository = AlbumsRepository(application)
+
     init {
         refreshDataFromNetwork()
     }
 
     private fun refreshDataFromNetwork() {
-        NetworkServiceAdapter.getInstance(getApplication()).getAlbums({
+        albumsRepository.refreshData({
             _albums.postValue(it)
             _eventNetworkError.value = false
             _isNetworkErrorShown.value = false
