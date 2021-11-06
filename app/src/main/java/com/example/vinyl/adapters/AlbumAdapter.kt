@@ -1,8 +1,10 @@
 package com.example.vinyl.adapters
 
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -37,8 +39,11 @@ class AlbumAdapter : RecyclerView.Adapter<AlbumAdapter.AlbumViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: AlbumViewHolder, position: Int) {
+        val album = albums[position]
+        val linearLayout = holder.itemView.findViewById<LinearLayout>(R.id.album_item_wrapper)
+        linearLayout.setBackgroundColor(Color.parseColor(album.bgColor.toString()))
         holder.viewDataBinding.also {
-            it.album = albums[position]
+            it.album = album
         }
         holder.viewDataBinding.root.setOnClickListener {
             Log.d("COLLECTOR_TAG", "ON CLICK LISTENER")

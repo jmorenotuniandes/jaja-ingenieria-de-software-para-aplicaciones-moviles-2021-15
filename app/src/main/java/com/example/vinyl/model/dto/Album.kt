@@ -8,5 +8,5 @@ data class Album (
     val description:String? = null,
     val genre:String? = null,
     val recordLabel:String? = null,
-    val bgColor: Int
+    val bgColor: String? = null
 )
