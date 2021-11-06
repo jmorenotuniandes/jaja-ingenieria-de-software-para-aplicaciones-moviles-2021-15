@@ -9,13 +9,13 @@
     tools:context=".ui.home.ArtistsFragment">
 
     <TextView
-        android:id="@+id/textViewAlbumsTittle"
+        android:id="@+id/textViewAlbumsTitle"
         android:layout_width="392dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="Albumes"
+        android:text="@string/title_albums"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,14 +27,14 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:hint="Buscar"
+        android:hint="@string/search"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.666"
-        app:layout_constraintStart_toStartOf="@id/textViewAlbumsTittle"
-        app:layout_constraintTop_toBottomOf="@+id/textViewAlbumsTittle">
+        app:layout_constraintStart_toStartOf="@id/textViewAlbumsTitle"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAlbumsTitle">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textInputEditText"
+            android:id="@+id/txtAlbumsFilter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -55,16 +55,18 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/add_new_album_card_legend"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="¿No encuentras el álbum que buscas? Puedes registrar un nuevo álbum en el sistema."
+                android:text="@string/add_new_album_legend"
                 tools:layout_editor_absoluteX="8dp"
                 tools:layout_editor_absoluteY="220dp" />
 
             <Button
+                android:id="@+id/add_new_album_card_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Registrar Nuevo Album"
+                android:text="@string/add_new_album"
                 android:textAlignment="viewEnd"
                 android:textColor="@color/secondaryColor"
                 android:background="@android:color/transparent"
