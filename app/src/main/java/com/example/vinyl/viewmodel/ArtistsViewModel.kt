@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel
 class ArtistsViewModel (application: Application) : AndroidViewModel(application) {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+        value = "This is Artists Fragment"
     }
     val text: LiveData<String> = _text
 }

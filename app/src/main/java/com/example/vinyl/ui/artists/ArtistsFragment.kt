@@ -1,4 +1,4 @@
-package com.example.vinyl.ui.home
+package com.example.vinyl.ui.artists
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -31,7 +31,7 @@ class ArtistsFragment : Fragment() {
         _binding = FragmentArtistsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textHome
+        val textView: TextView = binding.textArtists
         artistsViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
