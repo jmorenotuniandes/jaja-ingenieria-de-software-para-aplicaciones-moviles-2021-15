@@ -25,16 +25,16 @@ class ArtistsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        artistsViewModel =
-            ViewModelProvider(this).get(ArtistsViewModel::class.java)
+     /*   artistsViewModel =
+            ViewModelProvider(this).get(ArtistsViewModel::class.java)*/
 
         _binding = FragmentArtistsBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textArtists
+        /*val textView: TextView = binding.textArtists
         artistsViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
-        })
+        })*/
         return root
     }
 
