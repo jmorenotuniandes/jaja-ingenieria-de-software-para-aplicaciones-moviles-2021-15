@@ -11,6 +11,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.vinyl.R
 import com.example.vinyl.model.dto.Album
+import com.example.vinyl.model.dto.Artist
 import com.example.vinyl.model.dto.Collector
 import com.example.vinyl.model.dto.Comment
 import org.json.JSONArray
@@ -76,6 +77,31 @@ class NetworkServiceAdapter constructor(context: Context) {
                                 email = item.getString("email")
                             )
                         )
+                    }
+                    onComplete(list)
+                },
+                Response.ErrorListener {
+                    onError(it)
+                })
+        )
+    }
+
+    fun getArtists(onComplete: (resp: List<Artist>) -> Unit, onError: (error: VolleyError) -> Unit) {
+        requestQueue.add(
+            getRequest("musicians",
+                Response.Listener<String> { response ->
+                    val resp = JSONArray(response)
+                    val list = mutableListOf<Artist>()
+                    for (i in 0 until resp.length()) {
+                        val item = resp.getJSONObject(i)
+                        list.add(i, Artist(
+                            id = item.getInt("id"),
+                            name = item.getString("name"),
+                            image = item.getString("image"),
+                            description = item.getString("description"),
+                            birthDate = item.getString("birthDate"),
+                            bgColor = getBgColor(i)
+                        ))
                     }
                     onComplete(list)
                 },
