@@ -3,14 +3,10 @@ package com.example.vinyl.viewmodel
 import android.app.Application
 import androidx.lifecycle.*
 import com.example.vinyl.model.dto.Collector
+import com.example.vinyl.repository.CollectorRepository
 import com.example.vinyls_jetpack_application.network.NetworkServiceAdapter
 
 class CollectorsViewModel(application: Application) : AndroidViewModel(application) {
-
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
-    }
-    val text: LiveData<String> = _text
 
     private val _collectors = MutableLiveData<List<Collector>>()
     val collectors: LiveData<List<Collector>>
@@ -24,18 +20,22 @@ class CollectorsViewModel(application: Application) : AndroidViewModel(applicati
     val isNetworkErrorShown: LiveData<Boolean>
         get() = _isNetworkErrorShown
 
+    private var collectorRepository = CollectorRepository(application)
+
     init {
         refreshDataFromNetwork()
     }
 
     private fun refreshDataFromNetwork() {
-        NetworkServiceAdapter.getInstance(getApplication()).getCollectors({
+        collectorRepository.refreshData({
             _collectors.postValue(it)
             _eventNetworkError.value = false
             _isNetworkErrorShown.value = false
-        },{
-            _eventNetworkError.value = true
-        })
+        },
+            {
+                _eventNetworkError.value = true
+            }
+        )
     }
 
     fun onNetworkErrorShown() {
