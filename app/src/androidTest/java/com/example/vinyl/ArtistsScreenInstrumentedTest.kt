@@ -3,18 +3,14 @@ package com.example.vinyl
 
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.Espresso.pressBack
-import androidx.test.espresso.action.ViewActions.*
-import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.filters.LargeTest
 import androidx.test.rule.ActivityTestRule
 import androidx.test.runner.AndroidJUnit4
 import org.hamcrest.Description
 import org.hamcrest.Matcher
-import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.TypeSafeMatcher
 import org.junit.Rule
@@ -30,38 +26,23 @@ class ArtistsScreenInstrumentedTest {
     var mActivityTestRule = ActivityTestRule(MainActivity::class.java)
 
     @Test
-    fun artistsScreenInstrumentedTest1() {
-        val textInputEditText = onView(
-            allOf(
-                withId(R.id.textInputEditText),
-                childAtPosition(
-                    childAtPosition(
-                        withId(R.id.outlinedTextFieldArtists),
-                        0
-                    ),
-                    0
-                ),
-                isDisplayed()
-            )
-        )
-        textInputEditText.perform(click())
-
-        val textInputEditText2 = onView(
-            allOf(
-                withId(R.id.textInputEditText),
-                childAtPosition(
-                    childAtPosition(
-                        withId(R.id.outlinedTextFieldArtists),
-                        0
-                    ),
-                    0
-                ),
-                isDisplayed()
-            )
-        )
-        textInputEditText2.perform(click())
-
+    fun artistsScreenInstrumentedTest() {
         val bottomNavigationItemView = onView(
+            allOf(
+                withId(R.id.navigation_albums), withContentDescription("Albums"),
+                childAtPosition(
+                    childAtPosition(
+                        withId(R.id.nav_view),
+                        0
+                    ),
+                    1
+                ),
+                isDisplayed()
+            )
+        )
+        bottomNavigationItemView.perform(click())
+
+        val bottomNavigationItemView2 = onView(
             allOf(
                 withId(R.id.navigation_artists), withContentDescription("Artists"),
                 childAtPosition(
@@ -74,54 +55,7 @@ class ArtistsScreenInstrumentedTest {
                 isDisplayed()
             )
         )
-        bottomNavigationItemView.perform(click())
-
-        pressBack()
-
-        pressBack()
-
-        val recyclerView = onView(
-            allOf(
-                withId(R.id.artists_rv),
-                childAtPosition(
-                    withClassName(`is`("androidx.constraintlayout.widget.ConstraintLayout")),
-                    2
-                )
-            )
-        )
-        recyclerView.perform(actionOnItemAtPosition<ViewHolder>(2, click()))
-
-        pressBack()
-
-        val textInputEditText3 = onView(
-            allOf(
-                withId(R.id.textInputEditText),
-                childAtPosition(
-                    childAtPosition(
-                        withId(R.id.outlinedTextFieldArtists),
-                        0
-                    ),
-                    0
-                ),
-                isDisplayed()
-            )
-        )
-        textInputEditText3.perform(click())
-
-        val textInputEditText4 = onView(
-            allOf(
-                withId(R.id.textInputEditText),
-                childAtPosition(
-                    childAtPosition(
-                        withId(R.id.outlinedTextFieldArtists),
-                        0
-                    ),
-                    0
-                ),
-                isDisplayed()
-            )
-        )
-        textInputEditText4.perform(replaceText("prueba\n"), closeSoftKeyboard())
+        bottomNavigationItemView2.perform(click())
     }
 
     private fun childAtPosition(
