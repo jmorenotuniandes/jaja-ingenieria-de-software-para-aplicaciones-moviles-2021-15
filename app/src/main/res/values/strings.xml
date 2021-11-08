@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Vinilos</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
-    <string name="title_artistas">Artistas</string>
-    <string name="title_albumes">Albumes</string>
-    <string name="title_coleccionistas">Coleccionistas</string>
+    <string name="title_artists">Artists</string>
+    <string name="title_albums">Albums</string>
+    <string name="title_collectors">Collectors</string>
+    <string name="search">Search</string>
+    <string name="add_new_album">ADD A NEW ALBUM</string>
+    <string name="add_new_album_legend">Don\'t find the album you are searching for? You can add a new one in our system.</string>
 </resources>
