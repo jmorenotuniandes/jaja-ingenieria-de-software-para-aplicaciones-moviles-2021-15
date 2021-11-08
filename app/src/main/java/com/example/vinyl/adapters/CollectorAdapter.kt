@@ -1,8 +1,10 @@
 package com.example.vinyl.adapters
 
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -37,13 +39,14 @@ class CollectorAdapter : RecyclerView.Adapter<CollectorAdapter.CollectorViewHold
     }
 
     override fun onBindViewHolder(holder: CollectorViewHolder, position: Int) {
+        val collector = collectors[position]
+        val linearLayout = holder.itemView.findViewById<LinearLayout>(R.id.collector_item_wrapper)
+        linearLayout.setBackgroundColor(Color.parseColor(collector.bgColor.toString()))
         holder.viewDataBinding.also {
-            it.collector = collectors[position]
+            it.collector = collector
         }
         holder.viewDataBinding.root.setOnClickListener {
             Log.d("COLLECTOR_TAG", "ON CLICK LISTENER")
-//            val action = CollectorFragmentDirections.actionCollectorFragmentToAlbumFragment()
-//            holder.viewDataBinding.root.findNavController().navigate(action)
         }
     }
 
