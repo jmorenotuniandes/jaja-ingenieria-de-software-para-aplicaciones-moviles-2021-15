@@ -39,7 +39,7 @@ class CollectorsFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        recyclerView = binding.collectorsLst
+        recyclerView = binding.collectorsRv
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = viewModelAdapter
     }
