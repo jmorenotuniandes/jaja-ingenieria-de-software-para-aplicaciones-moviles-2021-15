@@ -1,5 +1,8 @@
 package com.example.vinyl.model.dto
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Artist (
     val id: Int,
     val name:String,
@@ -7,4 +10,4 @@ data class Artist (
     val description:String,
     val birthDate:String,
     val bgColor: String? = null
-)
+): Parcelable

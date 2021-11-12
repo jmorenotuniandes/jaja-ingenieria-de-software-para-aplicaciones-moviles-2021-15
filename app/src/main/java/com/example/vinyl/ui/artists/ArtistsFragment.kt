@@ -15,6 +15,7 @@ import com.example.vinyl.adapters.ArtistAdapter
 import com.example.vinyl.databinding.FragmentArtistsBinding
 import com.example.vinyl.model.dto.Artist
 import com.example.vinyl.viewmodel.ArtistsViewModel
+import androidx.navigation.fragment.findNavController
 
 class ArtistsFragment : Fragment() {
 
@@ -32,7 +33,7 @@ class ArtistsFragment : Fragment() {
     ): View? {
         _binding = FragmentArtistsBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        viewModelAdapter = ArtistAdapter()
+        viewModelAdapter = ArtistAdapter(this)
         return root
     }
 
@@ -69,5 +70,10 @@ class ArtistsFragment : Fragment() {
             Toast.makeText(activity, "Network Error", Toast.LENGTH_LONG).show()
             artistsViewModel.onNetworkErrorShown()
         }
+    }
+
+    fun goToArtistDetails(artist: Artist) {
+        findNavController()
+            .navigate(ArtistsFragmentDirections.actionArtistsToArtistsDetails(artist))
     }
 }
