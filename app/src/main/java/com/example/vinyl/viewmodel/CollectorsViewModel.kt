@@ -1,10 +1,14 @@
 package com.example.vinyl.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.vinyl.model.dto.Collector
 import com.example.vinyl.repository.CollectorRepository
-import com.example.vinyls_jetpack_application.network.NetworkServiceAdapter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.lang.Exception
 
 class CollectorsViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -27,15 +31,19 @@ class CollectorsViewModel(application: Application) : AndroidViewModel(applicati
     }
 
     private fun refreshDataFromNetwork() {
-        collectorRepository.refreshData({
-            _collectors.postValue(it)
-            _eventNetworkError.value = false
-            _isNetworkErrorShown.value = false
-        },
-            {
-                _eventNetworkError.value = true
+        try {
+            viewModelScope.launch(Dispatchers.Default) {
+                withContext(Dispatchers.IO) {
+                    var data = collectorRepository.refreshData()
+                    _collectors.postValue(data)
+                }
+                _eventNetworkError.postValue(false)
+                _isNetworkErrorShown.postValue(false)
             }
-        )
+        } catch (e: Exception) {
+            Log.d("Error", e.toString())
+            _eventNetworkError.value = true
+        }
     }
 
     fun onNetworkErrorShown() {

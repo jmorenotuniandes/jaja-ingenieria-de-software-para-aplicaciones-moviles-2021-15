@@ -1,4 +1,4 @@
-package com.example.vinyls_jetpack_application.network
+package com.example.vinyl.model.network
 
 import android.content.Context
 import android.util.Log
@@ -9,13 +9,15 @@ import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.example.vinyl.R
 import com.example.vinyl.model.dto.Album
 import com.example.vinyl.model.dto.Artist
 import com.example.vinyl.model.dto.Collector
 import com.example.vinyl.model.dto.Comment
 import org.json.JSONArray
 import org.json.JSONObject
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 class NetworkServiceAdapter constructor(context: Context) {
     companion object {
@@ -56,35 +58,25 @@ class NetworkServiceAdapter constructor(context: Context) {
         )
     }
 
-    fun getCollectors(
-        onComplete: (resp: List<Collector>) -> Unit,
-        onError: (error: VolleyError) -> Unit
-    ) {
-        requestQueue.add(
-            getRequest("collectors",
-                Response.Listener<String> { response ->
-                    Log.d("tagb", response)
-                    val resp = JSONArray(response)
-                    val list = mutableListOf<Collector>()
-                    for (i in 0 until resp.length()) {
-                        val item = resp.getJSONObject(i)
-                        list.add(
-                            i,
-                            Collector(
-                                collectorId = item.getInt("id"),
-                                name = item.getString("name"),
-                                telephone = item.getString("telephone"),
-                                email = item.getString("email"),
-                                bgColor = getBgColor(i),
-                            )
-                        )
-                    }
-                    onComplete(list)
-                },
-                Response.ErrorListener {
-                    onError(it)
-                })
-        )
+    suspend fun getCollectors() = suspendCoroutine<List<Collector>> { cont ->
+        requestQueue.add(getRequest("collectors",
+            { response ->
+                val resp = JSONArray(response)
+                val list = mutableListOf<Collector>()
+                for (i in 0 until resp.length()) {
+                    val item = resp.getJSONObject(i)
+                    list.add(i, Collector(
+                        collectorId = item.getInt("id"),
+                        name = item.getString("name"),
+                        telephone = item.getString("telephone"),
+                        email = item.getString("email"),
+                        bgColor = getBgColor(i)
+                    ))
+                }
+                cont.resume(list)
+            },
+            { cont.resumeWithException(it) }
+        ))
     }
 
     fun getArtists(onComplete: (resp: List<Artist>) -> Unit, onError: (error: VolleyError) -> Unit) {
