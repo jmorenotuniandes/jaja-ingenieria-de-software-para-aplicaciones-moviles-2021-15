@@ -34,7 +34,10 @@ class CollectorDetailsFragment : Fragment() {
             val collector = it.collectorDetails
             (requireActivity() as AppCompatActivity).supportActionBar?.title = collector.name
             binding!!.txtCollectorName.text = collector.name
-            // TODO: Setup the rest of the elements of this view
+            binding!!.txtCollectorCollection.text = "Collection: ${0}"
+            binding!!.txtCollectorMail.text = "Email: ${collector.email}"
+            binding!!.txtCollectorPhone.text = "Phone: ${collector.telephone}"
+
         }
     }
 
