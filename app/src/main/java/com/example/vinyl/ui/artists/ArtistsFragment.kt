@@ -10,7 +10,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.vinyl.adapters.AlbumAdapter
 import com.example.vinyl.adapters.ArtistAdapter
 import com.example.vinyl.databinding.FragmentArtistsBinding
 import com.example.vinyl.model.dto.Artist
@@ -75,5 +74,6 @@ class ArtistsFragment : Fragment() {
     fun goToArtistDetails(artist: Artist) {
         findNavController()
             .navigate(ArtistsFragmentDirections.actionArtistsToArtistsDetails(artist))
+        /*artistsViewModel.setCurrentArtist(artist)*/
     }
 }
