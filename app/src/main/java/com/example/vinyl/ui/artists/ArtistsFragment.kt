@@ -74,6 +74,5 @@ class ArtistsFragment : Fragment() {
     fun goToArtistDetails(artist: Artist) {
         findNavController()
             .navigate(ArtistsFragmentDirections.actionArtistsToArtistsDetails(artist))
-        artistsViewModel.setCurrentArtistAlbums(artist)
     }
 }
