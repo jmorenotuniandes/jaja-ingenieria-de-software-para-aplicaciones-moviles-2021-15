@@ -2,6 +2,7 @@ package com.example.vinyl.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.*
+import com.example.vinyl.model.dto.Album
 import com.example.vinyl.model.dto.Artist
 import com.example.vinyl.repository.ArtistRepository
 
@@ -10,10 +11,6 @@ class ArtistsViewModel (application: Application) : AndroidViewModel(application
     private val _artists = MutableLiveData<List<Artist>>()
     val artists: LiveData<List<Artist>>
         get() = _artists
-/*
-    private val _currentArtist = MutableLiveData<Artist>()
-    val currentArtist: LiveData<Artist>
-        get() = _currentArtist*/
 
     private var _eventNetworkError = MutableLiveData<Boolean>(false)
     val eventNetworkError: LiveData<Boolean>
@@ -29,10 +26,6 @@ class ArtistsViewModel (application: Application) : AndroidViewModel(application
         refreshDataFromNetwork()
     }
 
-   /* fun setCurrentArtist(artist: Artist){
-        _currentArtist.postValue(artist)
-    }
-*/
     private fun refreshDataFromNetwork(){
         artistRepository.refreshData({
                 _artists.postValue(it)

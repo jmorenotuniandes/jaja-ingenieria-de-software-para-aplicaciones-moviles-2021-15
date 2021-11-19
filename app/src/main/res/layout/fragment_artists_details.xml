@@ -20,7 +20,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             card_view:cardCornerRadius="4dp"
-            card_view:cardElevation="50dp">
+            card_view:cardElevation="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -63,6 +63,7 @@
             />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/artist_detailed_albums_rv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin"

@@ -102,8 +102,8 @@ class NetworkServiceAdapter constructor(context: Context) {
                             val album = Album(
                                 albumId = albumObject.getInt("id"),
                                 name = albumObject.getString("name"),
-                                releaseDate= albumObject.getString("releaseDate"),
-                                bgColor = "#FFFFFF"
+                                description=albumObject.getString("description"),
+                                releaseDate= albumObject.getString("releaseDate").take(4),
                             )
                             albums.add(i,album)
                         }

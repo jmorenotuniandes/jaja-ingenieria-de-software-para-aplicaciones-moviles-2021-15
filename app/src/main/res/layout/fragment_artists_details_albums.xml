@@ -11,8 +11,8 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        app:cardElevation="10dp"
+        android:layout_height="wrap_content"
+        app:cardElevation="1dp"
         app:cardCornerRadius="0dp"
         app:strokeColor="@color/black">
 
@@ -25,7 +25,7 @@
             android:id="@+id/album_item_details">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
@@ -51,14 +51,13 @@
                 android:orientation="vertical"
                 android:gravity="end">
 
-                 <TextView
+                <TextView
                     android:id="@+id/album_release_date"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="end"
-                    android:textAlignment="viewEnd"
-
-                    android:text="@{album.releaseDate}" />
+                    android:text="@{album.releaseDate}"
+                    android:textAlignment="viewEnd" />
 
             </LinearLayout>
         </LinearLayout>
