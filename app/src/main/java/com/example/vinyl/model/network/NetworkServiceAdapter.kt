@@ -84,19 +84,34 @@ class NetworkServiceAdapter constructor(context: Context) {
             getRequest("musicians",
                 Response.Listener<String> { response ->
                     val resp = JSONArray(response)
-                    val list = mutableListOf<Artist>()
+                    val artists = mutableListOf<Artist>()
                     for (i in 0 until resp.length()) {
-                        val item = resp.getJSONObject(i)
-                        list.add(i, Artist(
-                            id = item.getInt("id"),
-                            name = item.getString("name"),
-                            image = item.getString("image"),
-                            description = item.getString("description"),
-                            birthDate = item.getString("birthDate"),
-                            bgColor = getBgColor(i)
+                        val artistObject = resp.getJSONObject(i)
+                        val albumsArray = artistObject.getJSONArray("albums")
+                        val albums = mutableListOf<Album>()
+
+                        for( i in 0 until albumsArray.length()){
+                            val albumObject = albumsArray.getJSONObject(i)
+                            val album = Album(
+                                albumId = albumObject.getInt("id"),
+                                name = albumObject.getString("name"),
+                                description=albumObject.getString("description"),
+                                releaseDate= albumObject.getString("releaseDate").take(4),
+                            )
+                            albums.add(i,album)
+                        }
+
+                        artists.add(i, Artist(
+                            id = artistObject.getInt("id"),
+                            name = artistObject.getString("name"),
+                            image = artistObject.getString("image"),
+                            description = artistObject.getString("description"),
+                            birthDate = artistObject.getString("birthDate"),
+                            bgColor = getBgColor(i),
+                            albums = albums
                         ))
                     }
-                    onComplete(list)
+                    onComplete(artists)
                 },
                 Response.ErrorListener {
                     onError(it)

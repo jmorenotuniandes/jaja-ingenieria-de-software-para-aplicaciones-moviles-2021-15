@@ -6,4 +6,6 @@
     <string name="search">Search</string>
     <string name="add_new_album">ADD A NEW ALBUM</string>
     <string name="add_new_album_legend">Don\'t find the album you are searching for? You can add a new one in our system.</string>
+    <string name="artists_detail">Collector Detail</string>
+    <string name="artist_detail_cover_description">Artist photo</string>
 </resources>

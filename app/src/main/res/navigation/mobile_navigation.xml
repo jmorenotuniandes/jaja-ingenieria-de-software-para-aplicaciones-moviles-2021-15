@@ -9,7 +9,25 @@
         android:id="@+id/navigation_artists"
         android:name="com.example.vinyl.ui.artists.ArtistsFragment"
         android:label="@string/title_artists"
-        tools:layout="@layout/fragment_artists" />
+        tools:layout="@layout/fragment_artists">
+
+        <action
+            android:id="@+id/action_artists_to_artists_details"
+            app:destination="@id/navigation_artists_details" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_artists_details"
+        android:name="com.example.vinyl.ui.artists.ArtistDetailsFragment"
+        android:label="@string/artists_detail"
+        tools:layout="@layout/fragment_artists_details">
+        <argument
+            android:name="artistDetails"
+            app:argType="com.example.vinyl.model.dto.Artist" />
+    </fragment>
+
+
+
 
     <fragment
         android:id="@+id/navigation_albums"
