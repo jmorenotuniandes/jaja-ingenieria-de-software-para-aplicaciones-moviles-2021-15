@@ -6,7 +6,9 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vinyl.R
+import com.example.vinyl.databinding.AlbumDetailsItemBinding
 import com.example.vinyl.databinding.SongDetailsItemBinding
+import com.example.vinyl.model.dto.Album
 import com.example.vinyl.model.dto.Song
 
 class SongDetailsAdapter: RecyclerView.Adapter<SongDetailsAdapter.SongDetailsViewHolder>() {
