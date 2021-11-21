@@ -37,18 +37,25 @@ class NetworkServiceAdapter constructor(context: Context) {
                 { response ->
                     val resp = JSONArray(response)
                     val albums = mutableListOf<Album>()
-                    for (i in 0 until resp.length()) {
-                        val albumObject = resp.getJSONObject(i)
-                        val songsArray = albumObject.getJSONArray("tracks")
-                        val songs = mutableListOf<Song>()
 
-                        for (i in 0 until songsArray.length()){
-                            val songObject = songsArray.getJSONObject(i)
-                            val song = Song(
+                    var albumObject: JSONObject?
+                    var songsArray: JSONArray?
+
+                    var songObject: JSONObject?
+                    var song: Song?
+
+                    for (i in 0 until resp.length()) {
+                        val songs = mutableListOf<Song>()
+                        albumObject = resp.getJSONObject(i)
+                        songsArray = albumObject.getJSONArray("tracks")
+
+                        for (j in 0 until songsArray.length()){
+                            songObject = songsArray.getJSONObject(j)
+                            song = Song(
                                 name = songObject.getString("name"),
                                 duration = songObject.getString("duration")
                             )
-                            songs.add(i, song)
+                            songs.add(j, song)
                         }
 
                         albums.add(i, Album(
@@ -74,21 +81,28 @@ class NetworkServiceAdapter constructor(context: Context) {
                 val resp = JSONArray(response)
                 val collectors = mutableListOf<Collector>()
 
-                for (i in 0 until resp.length()) {
-                    val collectorObject = resp.getJSONObject(i)
-                    val collectorAlbumsArray = collectorObject.getJSONArray("collectorAlbums")
-                    val collectorAlbums = mutableListOf<Album>()
+                var collectorObject: JSONObject
+                var collectorAlbumsArray: JSONArray
 
-                    for (i in 0 until collectorAlbumsArray.length()){
-                        val collectorAlbumObject = collectorAlbumsArray.getJSONObject(i)
-                        val collectorAlbum = Album(
+                var collectorAlbumObject: JSONObject
+                var collectorAlbum: Album
+
+
+                for (i in 0 until resp.length()) {
+                    val collectorAlbums = mutableListOf<Album>()
+                    collectorObject = resp.getJSONObject(i)
+                    collectorAlbumsArray = collectorObject.getJSONArray("collectorAlbums")
+
+                    for (j in 0 until collectorAlbumsArray.length()){
+                        collectorAlbumObject = collectorAlbumsArray.getJSONObject(j)
+                        collectorAlbum = Album(
                             albumId = collectorAlbumObject.getInt("id"),
                             name = "",
                             description="",
                             releaseDate= "",
                             songs = mutableListOf<Song>()
                         )
-                        collectorAlbums.add(i,collectorAlbum)
+                        collectorAlbums.add(j,collectorAlbum)
                     }
                     collectors.add(i, Collector(
                         collectorId = collectorObject.getInt("id"),
@@ -131,21 +145,28 @@ class NetworkServiceAdapter constructor(context: Context) {
                 { response ->
                     val resp = JSONArray(response)
                     val artists = mutableListOf<Artist>()
-                    for (i in 0 until resp.length()) {
-                        val artistObject = resp.getJSONObject(i)
-                        val albumsArray = artistObject.getJSONArray("albums")
-                        val albums = mutableListOf<Album>()
 
-                        for( i in 0 until albumsArray.length()){
-                            val albumObject = albumsArray.getJSONObject(i)
-                            val album = Album(
+                    var artistObject: JSONObject
+                    var albumsArray: JSONArray
+
+                    var albumObject: JSONObject
+                    var album: Album
+
+                    for (i in 0 until resp.length()) {
+                        val albums = mutableListOf<Album>()
+                        artistObject = resp.getJSONObject(i)
+                        albumsArray = artistObject.getJSONArray("albums")
+
+                        for( j in 0 until albumsArray.length()){
+                            albumObject = albumsArray.getJSONObject(j)
+                            album = Album(
                                 albumId = albumObject.getInt("id"),
                                 name = albumObject.getString("name"),
                                 description=albumObject.getString("description"),
                                 releaseDate= albumObject.getString("releaseDate").take(4),
                                 songs = mutableListOf<Song>()
                             )
-                            albums.add(i,album)
+                            albums.add(j,album)
                         }
 
                         artists.add(i, Artist(
