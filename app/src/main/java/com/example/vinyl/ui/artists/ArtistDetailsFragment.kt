@@ -17,6 +17,7 @@ import com.example.vinyl.adapters.AlbumDetailsAdapter
 import com.example.vinyl.databinding.FragmentArtistsDetailsBinding
 import com.example.vinyl.viewmodel.ArtistsViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 
 
 class ArtistDetailsFragment : Fragment() {
@@ -55,6 +56,7 @@ class ArtistDetailsFragment : Fragment() {
                 .load(artist.image.toUri().buildUpon().scheme("https").build())
                 .apply(
                     RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
                         .placeholder(R.drawable.loading_animation)
                         .error(R.drawable.ic_broken_image)
                 )
