@@ -3,6 +3,7 @@ package com.example.vinyl.viewmodel
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
+import com.example.vinyl.model.dto.Album
 import com.example.vinyl.model.dto.Collector
 import com.example.vinyl.repository.CollectorRepository
 import kotlinx.coroutines.Dispatchers
@@ -36,6 +37,15 @@ class CollectorsViewModel(application: Application) : AndroidViewModel(applicati
                 withContext(Dispatchers.IO) {
                     var data = collectorRepository.refreshData()
                     _collectors.postValue(data)
+
+                    data.forEachIndexed{ index,collector ->
+                        val albums = mutableListOf<Album>()
+                        collector.collectorAlbums.forEachIndexed { index2, album ->
+                            albums.add(index2,  collectorRepository.refreshAlbumsDetailsData(album.albumId))
+                        }
+                        data[index].collectorAlbums = albums
+                        _collectors.postValue(data)
+                    }
                 }
                 _eventNetworkError.postValue(false)
                 _isNetworkErrorShown.postValue(false)

@@ -6,15 +6,15 @@ import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vinyl.R
-import com.example.vinyl.databinding.FragmentArtistsDetailsAlbumsBinding
+import com.example.vinyl.databinding.AlbumDetailsItemBinding
 import com.example.vinyl.model.dto.Album
 
-class ArtistDetailsAdapter: RecyclerView.Adapter<ArtistDetailsAdapter.ArtistDetailsViewHolder>() {
-    class ArtistDetailsViewHolder(val viewDataBinding: FragmentArtistsDetailsAlbumsBinding?) :
+class AlbumDetailsAdapter: RecyclerView.Adapter<AlbumDetailsAdapter.ArtistDetailsViewHolder>() {
+    class ArtistDetailsViewHolder(val viewDataBinding: AlbumDetailsItemBinding?) :
         RecyclerView.ViewHolder(viewDataBinding?.root!!) {
         companion object {
             @LayoutRes
-            val LAYOUT = R.layout.fragment_artists_details_albums
+            val LAYOUT = R.layout.album_details_item
         }
     }
     var albums = listOf <Album>()
@@ -24,7 +24,7 @@ class ArtistDetailsAdapter: RecyclerView.Adapter<ArtistDetailsAdapter.ArtistDeta
         }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArtistDetailsViewHolder {
-        val withDataBinding: FragmentArtistsDetailsAlbumsBinding = DataBindingUtil.inflate(
+        val withDataBinding: AlbumDetailsItemBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
             ArtistDetailsViewHolder.LAYOUT,
             parent,

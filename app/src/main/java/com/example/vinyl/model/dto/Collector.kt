@@ -9,6 +9,6 @@ data class Collector (
     val name:String,
     val telephone:String,
     val email:String,
-
-    val bgColor: String? = null
+    val bgColor: String? = null,
+    var collectorAlbums: List<Album>,
 ) : Parcelable

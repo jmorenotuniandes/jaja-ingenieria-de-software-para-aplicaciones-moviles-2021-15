@@ -7,43 +7,50 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.vinyl.adapters.AlbumDetailsAdapter
 import com.example.vinyl.databinding.FragmentCollectorDetailsBinding
 
 
 class CollectorDetailsFragment : Fragment() {
 
-    private var binding: FragmentCollectorDetailsBinding? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private var _binding: FragmentCollectorDetailsBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var recyclerView: RecyclerView
+    private var viewModelAdapter: AlbumDetailsAdapter? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentCollectorDetailsBinding.inflate(inflater, container, false)
-        return binding!!.root
+        _binding = FragmentCollectorDetailsBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+        viewModelAdapter = AlbumDetailsAdapter()
+        return root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
         val args: CollectorDetailsFragmentArgs by navArgs()
+        recyclerView = binding.rvCollectorAlbums
+        recyclerView.layoutManager = LinearLayoutManager(context)
+        recyclerView.adapter = viewModelAdapter
 
         args.let {
             val collector = it.collectorDetails
+            viewModelAdapter!!.albums = collector.collectorAlbums
             (requireActivity() as AppCompatActivity).supportActionBar?.title = collector.name
-            binding!!.txtCollectorName.text = collector.name
-            binding!!.txtCollectorCollection.text = "Collection: ${0}"
-            binding!!.txtCollectorMail.text = "Email: ${collector.email}"
-            binding!!.txtCollectorPhone.text = "Phone: ${collector.telephone}"
-
+            binding.tvCollectorName.text = collector.name
+            binding.tvCollectorSizeCollection.text = "Coleccion: ${collector.collectorAlbums.size} albumes"
+            binding.tvCollectorEmail.text = "Correo: ${collector.email}"
+            binding.tvCollectorPhone.text = "Tel: ${collector.telephone}"
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        binding = null
+        _binding = null
     }
 
 }

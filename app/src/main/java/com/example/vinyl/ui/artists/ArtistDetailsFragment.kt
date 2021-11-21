@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.vinyl.R
-import com.example.vinyl.adapters.ArtistDetailsAdapter
+import com.example.vinyl.adapters.AlbumDetailsAdapter
 import com.example.vinyl.databinding.FragmentArtistsDetailsBinding
 import com.example.vinyl.viewmodel.ArtistsViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,7 +25,7 @@ class ArtistDetailsFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
     private lateinit var artistsViewModel: ArtistsViewModel
-    private var viewModelAdapter: ArtistDetailsAdapter? = null
+    private var viewModelAdapter: AlbumDetailsAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,7 +34,7 @@ class ArtistDetailsFragment : Fragment() {
     ): View? {
         _binding = FragmentArtistsDetailsBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        viewModelAdapter = ArtistDetailsAdapter()
+        viewModelAdapter = AlbumDetailsAdapter()
         return root
     }
 
@@ -45,7 +45,7 @@ class ArtistDetailsFragment : Fragment() {
         recyclerView.adapter = viewModelAdapter
 
         args.let {
-           val artist = it.artistDetails
+            val artist = it.artistDetails
             viewModelAdapter!!.albums = artist.albums
             (requireActivity() as AppCompatActivity).supportActionBar?.title = artist.name
             binding!!.txtArtistName.text = artist.name
@@ -63,7 +63,7 @@ class ArtistDetailsFragment : Fragment() {
     }
 
     private fun onNetworkError() {
-        if(!artistsViewModel.isNetworkErrorShown.value!!) {
+        if (!artistsViewModel.isNetworkErrorShown.value!!) {
             Toast.makeText(activity, "Network Error", Toast.LENGTH_LONG).show()
             artistsViewModel.onNetworkErrorShown()
         }
