@@ -33,9 +33,8 @@ class NetworkServiceAdapter constructor(context: Context) {
         Volley.newRequestQueue(context.applicationContext)
     }
 
-    fun getAlbums(onComplete: (resp: List<Album>) -> Unit, onError: (error: VolleyError) -> Unit) {
-        requestQueue.add(
-            getRequest("albums",
+    suspend fun getAlbums() = suspendCoroutine<List<Album>> { cont ->
+        requestQueue.add(getRequest("albums",
                 { response ->
                     val resp = JSONArray(response)
                     val albums = mutableListOf<Album>()
@@ -62,10 +61,10 @@ class NetworkServiceAdapter constructor(context: Context) {
                             songs = songs
                         ))
                     }
-                    onComplete(albums)
+                    cont.resume(albums)
                 },
                 {
-                    onError(it)
+                    cont.resumeWithException(it)
                 })
         )
     }
@@ -130,7 +129,7 @@ class NetworkServiceAdapter constructor(context: Context) {
     fun getArtists(onComplete: (resp: List<Artist>) -> Unit, onError: (error: VolleyError) -> Unit) {
         requestQueue.add(
             getRequest("musicians",
-                Response.Listener<String> { response ->
+                { response ->
                     val resp = JSONArray(response)
                     val artists = mutableListOf<Artist>()
                     for (i in 0 until resp.length()) {
@@ -162,7 +161,7 @@ class NetworkServiceAdapter constructor(context: Context) {
                     }
                     onComplete(artists)
                 },
-                Response.ErrorListener {
+                {
                     onError(it)
                 })
         )
@@ -175,7 +174,7 @@ class NetworkServiceAdapter constructor(context: Context) {
     ) {
         requestQueue.add(
             getRequest("albums/$albumId/comments",
-                Response.Listener<String> { response ->
+                { response ->
                     val resp = JSONArray(response)
                     val list = mutableListOf<Comment>()
                     var item: JSONObject? = null
@@ -193,7 +192,7 @@ class NetworkServiceAdapter constructor(context: Context) {
                     }
                     onComplete(list)
                 },
-                Response.ErrorListener {
+                {
                     onError(it)
                 })
         )
@@ -208,10 +207,10 @@ class NetworkServiceAdapter constructor(context: Context) {
         requestQueue.add(
             postRequest("albums/$albumId/comments",
                 body,
-                Response.Listener<JSONObject> { response ->
+                { response ->
                     onComplete(response)
                 },
-                Response.ErrorListener {
+                {
                     onError(it)
                 })
         )
