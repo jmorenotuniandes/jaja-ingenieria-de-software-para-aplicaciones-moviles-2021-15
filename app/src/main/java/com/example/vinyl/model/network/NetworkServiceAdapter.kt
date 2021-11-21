@@ -1,4 +1,4 @@
-package com.example.vinyls_jetpack_application.network
+package com.example.vinyl.model.network
 
 import android.content.Context
 import android.util.Log
@@ -9,13 +9,15 @@ import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.example.vinyl.R
 import com.example.vinyl.model.dto.Album
 import com.example.vinyl.model.dto.Artist
 import com.example.vinyl.model.dto.Collector
 import com.example.vinyl.model.dto.Comment
 import org.json.JSONArray
 import org.json.JSONObject
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 class NetworkServiceAdapter constructor(context: Context) {
     companion object {
@@ -56,35 +58,59 @@ class NetworkServiceAdapter constructor(context: Context) {
         )
     }
 
-    fun getCollectors(
-        onComplete: (resp: List<Collector>) -> Unit,
-        onError: (error: VolleyError) -> Unit
-    ) {
-        requestQueue.add(
-            getRequest("collectors",
-                Response.Listener<String> { response ->
-                    Log.d("tagb", response)
-                    val resp = JSONArray(response)
-                    val list = mutableListOf<Collector>()
-                    for (i in 0 until resp.length()) {
-                        val item = resp.getJSONObject(i)
-                        list.add(
-                            i,
-                            Collector(
-                                collectorId = item.getInt("id"),
-                                name = item.getString("name"),
-                                telephone = item.getString("telephone"),
-                                email = item.getString("email"),
-                                bgColor = getBgColor(i),
-                            )
+    suspend fun getCollectors() = suspendCoroutine<List<Collector>> { cont ->
+        requestQueue.add(getRequest("collectors",
+            { response ->
+                val resp = JSONArray(response)
+                val collectors = mutableListOf<Collector>()
+
+                for (i in 0 until resp.length()) {
+                    val collectorObject = resp.getJSONObject(i)
+                    val collectorAlbumsArray = collectorObject.getJSONArray("collectorAlbums")
+                    val collectorAlbums = mutableListOf<Album>()
+
+                    for (i in 0 until collectorAlbumsArray.length()){
+                        val collectorAlbumObject = collectorAlbumsArray.getJSONObject(i)
+                        val collectorAlbum = Album(
+                            albumId = collectorAlbumObject.getInt("id"),
+                            name = "",
+                            description="",
+                            releaseDate= "",
                         )
+                        collectorAlbums.add(i,collectorAlbum)
                     }
-                    onComplete(list)
-                },
-                Response.ErrorListener {
-                    onError(it)
-                })
-        )
+                    collectors.add(i, Collector(
+                        collectorId = collectorObject.getInt("id"),
+                        name = collectorObject.getString("name"),
+                        telephone = collectorObject.getString("telephone"),
+                        email = collectorObject.getString("email"),
+                        bgColor = getBgColor(i),
+                        collectorAlbums =  collectorAlbums
+                    ))
+                }
+                cont.resume(collectors)
+            },
+            {
+                cont.resumeWithException(it)
+            }
+        ))
+    }
+
+    suspend fun getAlbum( albumId:Int) = suspendCoroutine<Album> {cont ->
+        requestQueue.add(getRequest("albums/$albumId",
+            { response ->
+                val albumObject = JSONObject(response)
+                val album = Album(
+                    albumId= albumObject.getInt("id"),
+                    name = albumObject.getString("name"),
+                    description=albumObject.getString("description"),
+                    releaseDate= albumObject.getString("releaseDate").take(4),
+                )
+                cont.resume(album)
+            },
+            {
+                cont.resumeWithException(it)
+            }))
     }
 
     fun getArtists(onComplete: (resp: List<Artist>) -> Unit, onError: (error: VolleyError) -> Unit) {
@@ -92,19 +118,34 @@ class NetworkServiceAdapter constructor(context: Context) {
             getRequest("musicians",
                 Response.Listener<String> { response ->
                     val resp = JSONArray(response)
-                    val list = mutableListOf<Artist>()
+                    val artists = mutableListOf<Artist>()
                     for (i in 0 until resp.length()) {
-                        val item = resp.getJSONObject(i)
-                        list.add(i, Artist(
-                            id = item.getInt("id"),
-                            name = item.getString("name"),
-                            image = item.getString("image"),
-                            description = item.getString("description"),
-                            birthDate = item.getString("birthDate"),
-                            bgColor = getBgColor(i)
+                        val artistObject = resp.getJSONObject(i)
+                        val albumsArray = artistObject.getJSONArray("albums")
+                        val albums = mutableListOf<Album>()
+
+                        for( i in 0 until albumsArray.length()){
+                            val albumObject = albumsArray.getJSONObject(i)
+                            val album = Album(
+                                albumId = albumObject.getInt("id"),
+                                name = albumObject.getString("name"),
+                                description=albumObject.getString("description"),
+                                releaseDate= albumObject.getString("releaseDate").take(4),
+                            )
+                            albums.add(i,album)
+                        }
+
+                        artists.add(i, Artist(
+                            id = artistObject.getInt("id"),
+                            name = artistObject.getString("name"),
+                            image = artistObject.getString("image"),
+                            description = artistObject.getString("description"),
+                            birthDate = artistObject.getString("birthDate"),
+                            bgColor = getBgColor(i),
+                            albums = albums
                         ))
                     }
-                    onComplete(list)
+                    onComplete(artists)
                 },
                 Response.ErrorListener {
                     onError(it)
