@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.example.vinyl.model.dto.Album
 import com.example.vinyl.repository.AlbumsRepository
-import com.example.vinyls_jetpack_application.network.NetworkServiceAdapter
 
 class AlbumsViewModel(application: Application) : AndroidViewModel(application) {
 
