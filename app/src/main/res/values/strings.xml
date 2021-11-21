@@ -9,4 +9,7 @@
     <string name="artists_detail">Collector Detail</string>
     <string name="artist_detail_cover_description">Artist photo</string>
     <string name="subtitle_collectors_details">Albumes de la coleccion</string>
+    <string name="album_detail_cover_title">album detail cover</string>
+    <string name="title_songs">Canciones</string>
+    <string name="album_detail">Album Detail</string>
 </resources>

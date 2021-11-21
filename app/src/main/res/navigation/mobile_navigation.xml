@@ -33,7 +33,23 @@
         android:id="@+id/navigation_albums"
         android:name="com.example.vinyl.ui.albums.AlbumsFragment"
         android:label="@string/title_albums"
-        tools:layout="@layout/fragment_albums" />
+        tools:layout="@layout/fragment_albums" >
+        <action
+            android:id="@+id/action_albums_to_albums_details"
+            app:destination="@id/navigation_albums_details" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_albums_details"
+        android:name="com.example.vinyl.ui.albums.AlbumDetailsFragment"
+        android:label="@string/album_detail"
+        tools:layout="@layout/fragment_albums_details">
+        <argument
+            android:name="albumDetails"
+            app:argType="com.example.vinyl.model.dto.Album" />
+    </fragment>
+
+
 
     <fragment
         android:id="@+id/navigation_collectors"

@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vinyl.R
@@ -32,7 +33,7 @@ class AlbumsFragment : Fragment() {
     ): View? {
         _binding = FragmentAlbumsBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        viewModelAdapter = AlbumAdapter()
+        viewModelAdapter = AlbumAdapter(this)
         return root
     }
 
@@ -70,5 +71,10 @@ class AlbumsFragment : Fragment() {
             Toast.makeText(activity, "Network Error", Toast.LENGTH_LONG).show()
             albumsViewModel.onNetworkErrorShown()
         }
+    }
+
+    fun goToAlbumDetails(album: Album) {
+        findNavController()
+            .navigate(AlbumsFragmentDirections.actionAlbumsToAlbumsDetails(album))
     }
 }
