@@ -12,5 +12,6 @@ data class Album (
     val description:String? = null,
     val genre:String? = null,
     val recordLabel:String? = null,
-    val bgColor: String? = null
+    val bgColor: String? = null,
+    val songs: List<Song>,
 ): Parcelable

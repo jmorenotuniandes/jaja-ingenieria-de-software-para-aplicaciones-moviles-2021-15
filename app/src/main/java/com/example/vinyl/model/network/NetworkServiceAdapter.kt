@@ -9,10 +9,7 @@ import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.example.vinyl.model.dto.Album
-import com.example.vinyl.model.dto.Artist
-import com.example.vinyl.model.dto.Collector
-import com.example.vinyl.model.dto.Comment
+import com.example.vinyl.model.dto.*
 import org.json.JSONArray
 import org.json.JSONObject
 import kotlin.coroutines.resume
@@ -39,20 +36,35 @@ class NetworkServiceAdapter constructor(context: Context) {
     fun getAlbums(onComplete: (resp: List<Album>) -> Unit, onError: (error: VolleyError) -> Unit) {
         requestQueue.add(
             getRequest("albums",
-                Response.Listener<String> { response ->
+                { response ->
                     val resp = JSONArray(response)
-                    val list = mutableListOf<Album>()
+                    val albums = mutableListOf<Album>()
                     for (i in 0 until resp.length()) {
-                        val item = resp.getJSONObject(i)
-                        list.add(i, Album(
-                            albumId = item.getInt("id"),
-                            name = item.getString("name"),
-                            bgColor = getBgColor(i)
+                        val albumObject = resp.getJSONObject(i)
+                        val songsArray = albumObject.getJSONArray("tracks")
+                        val songs = mutableListOf<Song>()
+
+                        for (i in 0 until songsArray.length()){
+                            val songObject = songsArray.getJSONObject(i)
+                            val song = Song(
+                                name = songObject.getString("name"),
+                                duration = songObject.getString("duration")
+                            )
+                            songs.add(i, song)
+                        }
+
+                        albums.add(i, Album(
+                            albumId = albumObject.getInt("id"),
+                            name = albumObject.getString("name"),
+                            description = albumObject.getString("description"),
+                            cover = albumObject.getString("cover"),
+                            bgColor = getBgColor(i),
+                            songs = songs
                         ))
                     }
-                    onComplete(list)
+                    onComplete(albums)
                 },
-                Response.ErrorListener {
+                {
                     onError(it)
                 })
         )
@@ -76,6 +88,7 @@ class NetworkServiceAdapter constructor(context: Context) {
                             name = "",
                             description="",
                             releaseDate= "",
+                            songs = mutableListOf<Song>()
                         )
                         collectorAlbums.add(i,collectorAlbum)
                     }
@@ -105,6 +118,7 @@ class NetworkServiceAdapter constructor(context: Context) {
                     name = albumObject.getString("name"),
                     description=albumObject.getString("description"),
                     releaseDate= albumObject.getString("releaseDate").take(4),
+                    songs = mutableListOf<Song>()
                 )
                 cont.resume(album)
             },
@@ -131,6 +145,7 @@ class NetworkServiceAdapter constructor(context: Context) {
                                 name = albumObject.getString("name"),
                                 description=albumObject.getString("description"),
                                 releaseDate= albumObject.getString("releaseDate").take(4),
+                                songs = mutableListOf<Song>()
                             )
                             albums.add(i,album)
                         }
