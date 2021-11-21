@@ -11,8 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.vinyl.R
 import com.example.vinyl.databinding.AlbumItemBinding
 import com.example.vinyl.model.dto.Album
+import com.example.vinyl.ui.albums.AlbumsFragment
 
-class AlbumAdapter : RecyclerView.Adapter<AlbumAdapter.AlbumViewHolder>() {
+class AlbumAdapter (private val albumsFragment: AlbumsFragment): RecyclerView.Adapter<AlbumAdapter.AlbumViewHolder>() {
 
     class AlbumViewHolder(val viewDataBinding: AlbumItemBinding) :
         RecyclerView.ViewHolder(viewDataBinding.root) {
@@ -46,9 +47,7 @@ class AlbumAdapter : RecyclerView.Adapter<AlbumAdapter.AlbumViewHolder>() {
             it.album = album
         }
         holder.viewDataBinding.root.setOnClickListener {
-            Log.d("COLLECTOR_TAG", "ON CLICK LISTENER")
-//            val action = _root_ide_package_.com.example.vinyl.model.dto.AlbumFragmentDirections.action_root_ide_package_.com.example.vinyl.model.dto.AlbumFragmentToAlbumFragment()
-//            holder.viewDataBinding.root.findNavController().navigate(action)
+            albumsFragment.goToAlbumDetails(album)
         }
     }
 

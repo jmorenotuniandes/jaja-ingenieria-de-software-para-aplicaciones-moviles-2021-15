@@ -1,7 +1,6 @@
 package com.example.vinyl.adapters
 
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -11,8 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.vinyl.R
 import com.example.vinyl.databinding.CollectorItemBinding
 import com.example.vinyl.model.dto.Collector
+import com.example.vinyl.ui.collectors.CollectorsFragment
 
-class CollectorAdapter : RecyclerView.Adapter<CollectorAdapter.CollectorViewHolder>() {
+class CollectorAdapter (private val collectorsFragment: CollectorsFragment) : RecyclerView.Adapter<CollectorAdapter.CollectorViewHolder>() {
 
     class CollectorViewHolder(val viewDataBinding: CollectorItemBinding) :
         RecyclerView.ViewHolder(viewDataBinding.root) {
@@ -27,6 +27,8 @@ class CollectorAdapter : RecyclerView.Adapter<CollectorAdapter.CollectorViewHold
             field = value
             notifyDataSetChanged()
         }
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CollectorViewHolder {
         val withDataBinding: CollectorItemBinding = DataBindingUtil.inflate(
@@ -46,7 +48,7 @@ class CollectorAdapter : RecyclerView.Adapter<CollectorAdapter.CollectorViewHold
             it.collector = collector
         }
         holder.viewDataBinding.root.setOnClickListener {
-            Log.d("COLLECTOR_TAG", "ON CLICK LISTENER")
+            collectorsFragment.goToCollectorDetails(collector)
         }
     }
 
