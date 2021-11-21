@@ -2,7 +2,6 @@ package com.example.vinyl.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.*
-import com.example.vinyl.model.dto.Album
 import com.example.vinyl.model.dto.Artist
 import com.example.vinyl.repository.ArtistRepository
 
