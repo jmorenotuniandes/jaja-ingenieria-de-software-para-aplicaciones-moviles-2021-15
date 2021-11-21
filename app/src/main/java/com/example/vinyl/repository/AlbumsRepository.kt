@@ -1,7 +1,6 @@
 package com.example.vinyl.repository
 
 import android.app.Application
-import com.android.volley.VolleyError
 import com.example.vinyl.model.dto.Album
 import com.example.vinyl.model.network.NetworkServiceAdapter
 

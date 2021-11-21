@@ -5,7 +5,6 @@ import android.util.Log
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
-import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
@@ -19,7 +18,7 @@ import kotlin.coroutines.suspendCoroutine
 class NetworkServiceAdapter constructor(context: Context) {
     companion object {
         const val BASE_URL = "https://back-vinyls-populated.herokuapp.com/"
-        var instance: NetworkServiceAdapter? = null
+        private var instance: NetworkServiceAdapter? = null
         fun getInstance(context: Context) =
             instance ?: synchronized(this) {
                 instance ?: NetworkServiceAdapter(context).also {
@@ -126,7 +125,7 @@ class NetworkServiceAdapter constructor(context: Context) {
             }))
     }
 
-    fun getArtists(onComplete: (resp: List<Artist>) -> Unit, onError: (error: VolleyError) -> Unit) {
+    suspend fun getArtists() = suspendCoroutine<List<Artist>>{cont ->
         requestQueue.add(
             getRequest("musicians",
                 { response ->
@@ -159,19 +158,15 @@ class NetworkServiceAdapter constructor(context: Context) {
                             albums = albums
                         ))
                     }
-                    onComplete(artists)
+                    cont.resume(artists)
                 },
                 {
-                    onError(it)
+                    cont.resumeWithException(it)
                 })
         )
     }
 
-    fun getComments(
-        albumId: Int,
-        onComplete: (resp: List<Comment>) -> Unit,
-        onError: (error: VolleyError) -> Unit
-    ) {
+    suspend fun getComments(albumId: Int) = suspendCoroutine<List<Comment>> { cont ->
         requestQueue.add(
             getRequest("albums/$albumId/comments",
                 { response ->
@@ -190,28 +185,10 @@ class NetworkServiceAdapter constructor(context: Context) {
                             )
                         )
                     }
-                    onComplete(list)
+                    cont.resume(list)
                 },
                 {
-                    onError(it)
-                })
-        )
-    }
-
-    fun postComment(
-        body: JSONObject,
-        albumId: Int,
-        onComplete: (resp: JSONObject) -> Unit,
-        onError: (error: VolleyError) -> Unit
-    ) {
-        requestQueue.add(
-            postRequest("albums/$albumId/comments",
-                body,
-                { response ->
-                    onComplete(response)
-                },
-                {
-                    onError(it)
+                    cont.resumeWithException(it)
                 })
         )
     }

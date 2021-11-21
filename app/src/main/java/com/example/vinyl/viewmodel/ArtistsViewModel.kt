@@ -1,9 +1,13 @@
 package com.example.vinyl.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.vinyl.model.dto.Artist
 import com.example.vinyl.repository.ArtistRepository
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class ArtistsViewModel (application: Application) : AndroidViewModel(application) {
 
@@ -26,15 +30,19 @@ class ArtistsViewModel (application: Application) : AndroidViewModel(application
     }
 
     private fun refreshDataFromNetwork(){
-        artistRepository.refreshData({
-                _artists.postValue(it)
-                _eventNetworkError.value = false
-                _isNetworkErrorShown.value = false
-            },
-            {
-                _eventNetworkError.value = true
+        try {
+            viewModelScope.launch(Dispatchers.Default){
+                withContext(Dispatchers.IO){
+                    val data = artistRepository.refreshData()
+                    _artists.postValue(data)
+                }
+                _eventNetworkError.postValue(false)
+                _isNetworkErrorShown.postValue(false)
             }
-        )
+        } catch (e: Exception){
+            Log.d("Error", e.toString())
+            _eventNetworkError.value = true
+        }
     }
 
     fun onNetworkErrorShown() {
