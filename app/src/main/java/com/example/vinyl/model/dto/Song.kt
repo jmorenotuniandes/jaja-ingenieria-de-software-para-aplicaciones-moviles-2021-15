@@ -6,11 +6,7 @@ import kotlinx.serialization.Serializable
 
 @Parcelize
 @Serializable
-data class Collector (
-    val collectorId: Int,
+data class Song (
     val name:String,
-    val telephone:String,
-    val email:String,
-    val bgColor: String? = null,
-    var collectorAlbums: List<Album>,
-) : Parcelable
+    val duration:String
+): Parcelable

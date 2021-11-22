@@ -14,7 +14,7 @@
 <!-- ABOUT THE PROJECT -->
 ## Acerca del proyecto
 
-![Alt text](/Screenshot_20211107_222858.png?raw=true)
+![Alt text](/preview_image.png?raw=true)
 
 ### Proyecto construido con
 

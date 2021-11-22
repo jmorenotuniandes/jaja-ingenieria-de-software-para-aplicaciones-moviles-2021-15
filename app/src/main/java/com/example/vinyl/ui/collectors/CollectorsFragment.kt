@@ -4,11 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.vinyl.R
@@ -34,7 +34,7 @@ class CollectorsFragment : Fragment() {
 
         _binding = FragmentCollectorsBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        viewModelAdapter = CollectorAdapter()
+        viewModelAdapter = CollectorAdapter(this)
         return root
     }
 
@@ -72,5 +72,10 @@ class CollectorsFragment : Fragment() {
             Toast.makeText(activity, "Network Error", Toast.LENGTH_LONG).show()
             collectorsViewModel.onNetworkErrorShown()
         }
+    }
+
+    fun goToCollectorDetails(collector: Collector) {
+        findNavController()
+            .navigate(CollectorsFragmentDirections.actionCollectorsToCollectorDetails(collector))
     }
 }

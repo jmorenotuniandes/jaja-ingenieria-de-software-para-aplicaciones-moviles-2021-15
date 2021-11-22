@@ -1,5 +1,11 @@
 package com.example.vinyl.model.dto
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
+
+@Parcelize
+@Serializable
 data class Album (
     val albumId: Int,
     val name:String,
@@ -8,5 +14,6 @@ data class Album (
     val description:String? = null,
     val genre:String? = null,
     val recordLabel:String? = null,
-    val bgColor: String? = null
-)
+    val bgColor: String? = null,
+    val songs: List<Song>,
+): Parcelable

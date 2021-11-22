@@ -1,7 +1,6 @@
 package com.example.vinyl.adapters
 
 import android.graphics.Color
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.LinearLayout
@@ -11,8 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.vinyl.R
 import com.example.vinyl.databinding.ArtistItemBinding
 import com.example.vinyl.model.dto.Artist
+import com.example.vinyl.ui.artists.ArtistsFragment
 
-class ArtistAdapter : RecyclerView.Adapter<ArtistAdapter.ArtistViewHolder>() {
+class ArtistAdapter (private val artistsFragment: ArtistsFragment) : RecyclerView.Adapter<ArtistAdapter.ArtistViewHolder>() {
 
     class ArtistViewHolder(val viewDataBinding: ArtistItemBinding) :
         RecyclerView.ViewHolder(viewDataBinding.root) {
@@ -46,7 +46,7 @@ class ArtistAdapter : RecyclerView.Adapter<ArtistAdapter.ArtistViewHolder>() {
             it.artist = artist
         }
         holder.viewDataBinding.root.setOnClickListener {
-            Log.d("COLLECTOR_TAG", "ON CLICK LISTENER")
+            artistsFragment.goToArtistDetails(artist)
         }
     }
 
