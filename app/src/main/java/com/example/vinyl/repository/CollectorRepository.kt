@@ -6,7 +6,6 @@ import android.net.ConnectivityManager
 import android.util.Log
 import com.example.vinyl.model.dto.Album
 import com.example.vinyl.model.dto.Collector
-import com.example.vinyl.model.dto.Comment
 import com.example.vinyl.model.network.NetworkServiceAdapter
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
@@ -54,12 +53,8 @@ class CollectorRepository (val application: Application) {
             })
         }
     }
-
-
     suspend fun refreshAlbumsDetailsData(albumId: Int): Album {
         return NetworkServiceAdapter.getInstance(application).getAlbum(albumId)
     }
-
-
 
 }
