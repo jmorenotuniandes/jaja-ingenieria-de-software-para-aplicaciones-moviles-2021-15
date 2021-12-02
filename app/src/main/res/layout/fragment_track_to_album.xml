@@ -4,17 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="16dp"
     tools:context=".ui.albums.TrackToAlbumFragment">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/add_track_to_album_title" />
+        android:layout_marginBottom="8dp"
+        android:text="@string/add_track_to_album_title"
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/add_track_album_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:text="@string/add_track_to_album_desc" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -25,7 +30,9 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txt_song_name"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="#FFFFFF" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -37,15 +44,18 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/txt_song_duration"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="#FFFFFF" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/btn_add_song_album"
-        android:text="@string/save"
-        />
+        android:layout_width="182dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:minHeight="52dp"
+        android:text="@string/save" />
 
 </LinearLayout>

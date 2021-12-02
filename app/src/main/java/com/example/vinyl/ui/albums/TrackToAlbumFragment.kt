@@ -6,12 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.example.vinyl.R
 import com.example.vinyl.databinding.FragmentTrackToAlbumBinding
 import com.example.vinyl.model.dto.Album
 import com.example.vinyl.model.dto.Song
+import com.example.vinyl.viewmodel.AlbumsViewModel
 import com.example.vinyl.viewmodel.TrackToAlbumViewModel
 
 class TrackToAlbumFragment : Fragment() {
@@ -20,6 +22,7 @@ class TrackToAlbumFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var trackToAlbumViewModel: TrackToAlbumViewModel
+    private val albumsViewModel: AlbumsViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +59,10 @@ class TrackToAlbumFragment : Fragment() {
         if(!trackToAlbumViewModel.isSuccessShown.value!!) {
             Toast.makeText(activity, "Song Saved", Toast.LENGTH_LONG).show()
             trackToAlbumViewModel.onSuccessShown()
+            binding.txtSongName.text?.clear()
+            binding.txtSongDuration.text?.clear()
+            binding.txtSongName.requestFocus()
+            albumsViewModel.refreshDataFromNetwork()
         }
     }
 

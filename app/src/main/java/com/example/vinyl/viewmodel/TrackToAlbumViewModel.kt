@@ -31,10 +31,6 @@ class TrackToAlbumViewModel(application: Application): AndroidViewModel(applicat
 
     private var albumRepository = AlbumsRepository(application)
 
-    init {
-        Log.d("TRACK TO ALBUM", "VIEW MODEL CREATED")
-    }
-
     fun onNetworkErrorShown() {
         _isNetworkErrorShown.value = true
     }

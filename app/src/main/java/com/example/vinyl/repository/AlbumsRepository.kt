@@ -25,16 +25,21 @@ class AlbumsRepository (val application: Application) {
 
     suspend fun refreshData(): List<Album>{
         var albums = getAlbums()
-        return if(albums.isNullOrEmpty()){
-            val cm = application.baseContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            if( cm.activeNetworkInfo?.type != ConnectivityManager.TYPE_WIFI && cm.activeNetworkInfo?.type != ConnectivityManager.TYPE_MOBILE){
-                emptyList()
-            } else {
-                albums = NetworkServiceAdapter.getInstance(application).getAlbums()
-                addAlbums(albums)
-                albums
-            }
-        } else albums
+        albums = NetworkServiceAdapter.getInstance(application).getAlbums()
+        addAlbums(albums)
+        return albums
+
+        // TODO: Verify how to temporarily disable the cache strategy when adding a new song
+//        return if(albums.isNullOrEmpty()){
+//            val cm = application.baseContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+//            if( cm.activeNetworkInfo?.type != ConnectivityManager.TYPE_WIFI && cm.activeNetworkInfo?.type != ConnectivityManager.TYPE_MOBILE){
+//                emptyList()
+//            } else {
+//                albums = NetworkServiceAdapter.getInstance(application).getAlbums()
+//                addAlbums(albums)
+//                albums
+//            }
+//        } else albums
     }
 
     suspend fun getAlbums(): List<Album>{
