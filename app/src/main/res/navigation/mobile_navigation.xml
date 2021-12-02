@@ -46,6 +46,9 @@
         <argument
             android:name="albumDetails"
             app:argType="com.example.vinyl.model.dto.Album" />
+        <action
+            android:id="@+id/action_navigation_albums_details_to_trackToAlbumFragment"
+            app:destination="@id/trackToAlbumFragment" />
     </fragment>
 
 
@@ -68,5 +71,13 @@
         <argument
             android:name="collectorDetails"
             app:argType="com.example.vinyl.model.dto.Collector" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/trackToAlbumFragment"
+        android:name="com.example.vinyl.ui.albums.TrackToAlbumFragment"
+        android:label="@string/title_fragment_add_song"
+        tools:layout="@layout/fragment_track_to_album">
+        <argument android:name="album" app:argType="com.example.vinyl.model.dto.Album" />
     </fragment>
 </navigation>

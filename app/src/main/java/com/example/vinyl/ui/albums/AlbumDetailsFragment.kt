@@ -1,12 +1,15 @@
 package com.example.vinyl.ui.albums
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -24,6 +27,7 @@ class AlbumDetailsFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
     private var viewModelAdapter: SongDetailsAdapter? = null
+    private lateinit var addTrackButton: Button
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,6 +46,8 @@ class AlbumDetailsFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.adapter = viewModelAdapter
 
+        addTrackButton = binding.addNewTrackBtn
+
         args.let {
             val album = it.albumDetails
             viewModelAdapter!!.songs = album.songs
@@ -58,10 +64,13 @@ class AlbumDetailsFragment : Fragment() {
                         .error(R.drawable.ic_broken_image)
                 )
                 .into(binding.albumDetailsCover)
+
+            addTrackButton.setOnClickListener(View.OnClickListener {
+                findNavController()
+                    .navigate(AlbumDetailsFragmentDirections.actionNavigationAlbumsDetailsToTrackToAlbumFragment(album))
+            })
         }
     }
-
-
 
     override fun onDestroy() {
         super.onDestroy()
