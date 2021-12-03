@@ -29,6 +29,10 @@ class TrackToAlbumViewModel(application: Application): AndroidViewModel(applicat
     val isSuccessShown: LiveData<Boolean>
         get() = _isSuccessShown
 
+    private var _currentAlbum = MutableLiveData<Album>()
+    val currentAlbum: LiveData<Album>
+        get() = _currentAlbum
+
     private var albumRepository = AlbumsRepository(application)
 
     fun onNetworkErrorShown() {
@@ -46,11 +50,13 @@ class TrackToAlbumViewModel(application: Application): AndroidViewModel(applicat
                     val data = albumRepository.addSongToAlbum(song, album)
                     _eventNetworkError.postValue(false)
                     _eventNetworkSuccess.postValue(true)
+                    _currentAlbum.postValue(album)
                 }
             }
         } catch (e: Exception) {
             Log.d("Error", e.toString())
             _eventNetworkError.value = true
+            _currentAlbum.value = null
         }
     }
 

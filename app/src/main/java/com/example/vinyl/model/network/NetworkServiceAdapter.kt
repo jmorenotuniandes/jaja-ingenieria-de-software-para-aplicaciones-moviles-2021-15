@@ -18,6 +18,8 @@ import kotlin.coroutines.suspendCoroutine
 class NetworkServiceAdapter constructor(context: Context) {
     companion object {
         const val BASE_URL = "https://back-vinyls-populated.herokuapp.com/"
+        // const val BASE_URL = "https://back-vynils-jsvanegaso.herokuapp.com/"
+
         private var instance: NetworkServiceAdapter? = null
         fun getInstance(context: Context) =
             instance ?: synchronized(this) {
@@ -125,12 +127,22 @@ class NetworkServiceAdapter constructor(context: Context) {
         requestQueue.add(getRequest("albums/$albumId",
             { response ->
                 val albumObject = JSONObject(response)
+                val songs = mutableListOf<Song>()
+                val jsonSongs = albumObject.getJSONArray("tracks")
+                for (i in 0 until jsonSongs.length()) {
+                    val track = jsonSongs.getJSONObject(i)
+                    songs.add(Song(
+                        name = track.getString("name"),
+                        duration = track.getString("duration")
+                    ))
+                }
+
                 val album = Album(
                     albumId= albumObject.getInt("id"),
                     name = albumObject.getString("name"),
                     description=albumObject.getString("description"),
                     releaseDate= albumObject.getString("releaseDate").take(4),
-                    songs = mutableListOf<Song>()
+                    songs = songs
                 )
                 cont.resume(album)
             },

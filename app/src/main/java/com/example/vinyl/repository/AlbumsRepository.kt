@@ -13,6 +13,7 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.json.JSONArray
+import java.lang.Exception
 
 class AlbumsRepository (val application: Application) {
 /*
@@ -23,23 +24,32 @@ class AlbumsRepository (val application: Application) {
 
     val format = Json {  }
 
-    suspend fun refreshData(): List<Album>{
-        var albums = getAlbums()
-        albums = NetworkServiceAdapter.getInstance(application).getAlbums()
-        addAlbums(albums)
-        return albums
+    suspend fun getAlbum(album: Album): Album? {
+        return try {
+            NetworkServiceAdapter.getInstance(application).getAlbum(album.albumId)
+        } catch (e:Exception) {
+            null
+        }
+    }
 
-        // TODO: Verify how to temporarily disable the cache strategy when adding a new song
-//        return if(albums.isNullOrEmpty()){
-//            val cm = application.baseContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-//            if( cm.activeNetworkInfo?.type != ConnectivityManager.TYPE_WIFI && cm.activeNetworkInfo?.type != ConnectivityManager.TYPE_MOBILE){
-//                emptyList()
-//            } else {
-//                albums = NetworkServiceAdapter.getInstance(application).getAlbums()
-//                addAlbums(albums)
-//                albums
-//            }
-//        } else albums
+    suspend fun refreshData(forced:Boolean = false): List<Album>{
+        if (forced) {
+            var albums = NetworkServiceAdapter.getInstance(application).getAlbums()
+            addAlbums(albums)
+            return albums
+        }
+
+        var albums = getAlbums()
+        return if(albums.isNullOrEmpty()){
+            val cm = application.baseContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            if( cm.activeNetworkInfo?.type != ConnectivityManager.TYPE_WIFI && cm.activeNetworkInfo?.type != ConnectivityManager.TYPE_MOBILE){
+                emptyList()
+            } else {
+                albums = NetworkServiceAdapter.getInstance(application).getAlbums()
+                addAlbums(albums)
+                albums
+            }
+        } else albums
     }
 
     suspend fun getAlbums(): List<Album>{

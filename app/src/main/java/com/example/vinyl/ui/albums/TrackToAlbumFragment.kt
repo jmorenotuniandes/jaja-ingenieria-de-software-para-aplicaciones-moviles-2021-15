@@ -18,6 +18,7 @@ import com.example.vinyl.viewmodel.TrackToAlbumViewModel
 
 class TrackToAlbumFragment : Fragment() {
 
+    private lateinit var currentAlbum: Album
     private var _binding: FragmentTrackToAlbumBinding? = null
     private val binding get() = _binding!!
 
@@ -62,7 +63,9 @@ class TrackToAlbumFragment : Fragment() {
             binding.txtSongName.text?.clear()
             binding.txtSongDuration.text?.clear()
             binding.txtSongName.requestFocus()
-            albumsViewModel.refreshDataFromNetwork()
+            if (this.currentAlbum != null) {
+                albumsViewModel.getAlbumDetails(currentAlbum!!)
+            }
         }
     }
 
@@ -80,6 +83,7 @@ class TrackToAlbumFragment : Fragment() {
 
         args.let {
             val album = it.album
+            this.currentAlbum = album
             binding.addTrackAlbumName.text = "${getString(R.string.add_track_to_album_desc)} ${album.name}"
 
             binding.btnAddSongAlbum.setOnClickListener {
