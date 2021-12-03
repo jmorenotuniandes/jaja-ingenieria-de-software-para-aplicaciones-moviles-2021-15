@@ -6,12 +6,14 @@ import android.net.ConnectivityManager
 import android.util.Log
 import com.example.vinyl.model.dto.Album
 import com.example.vinyl.model.dto.Artist
+import com.example.vinyl.model.dto.Song
 import com.example.vinyl.model.network.CacheManager
 import com.example.vinyl.model.network.NetworkServiceAdapter
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import org.json.JSONArray
+import java.lang.Exception
 
 class AlbumsRepository (val application: Application) {
 /*
@@ -22,7 +24,21 @@ class AlbumsRepository (val application: Application) {
 
     val format = Json {  }
 
-    suspend fun refreshData(): List<Album>{
+    suspend fun getAlbum(album: Album): Album? {
+        return try {
+            NetworkServiceAdapter.getInstance(application).getAlbum(album.albumId)
+        } catch (e:Exception) {
+            null
+        }
+    }
+
+    suspend fun refreshData(forced:Boolean = false): List<Album>{
+        if (forced) {
+            var albums = NetworkServiceAdapter.getInstance(application).getAlbums()
+            addAlbums(albums)
+            return albums
+        }
+
         var albums = getAlbums()
         return if(albums.isNullOrEmpty()){
             val cm = application.baseContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -58,5 +74,9 @@ class AlbumsRepository (val application: Application) {
                 apply()
             })
         }
+    }
+
+    suspend fun addSongToAlbum(song: Song, album:Album) {
+        NetworkServiceAdapter.getInstance(application).addSongToAlbum(song, album)
     }
 }

@@ -24,23 +24,43 @@ class AlbumsViewModel(application: Application) : AndroidViewModel(application) 
     val isNetworkErrorShown: LiveData<Boolean>
         get() = _isNetworkErrorShown
 
+    private var _albumDetails = MutableLiveData<Album>()
+    val albumDetails: LiveData<Album>
+        get() = _albumDetails
+
     private var albumsRepository = AlbumsRepository(application)
 
     init {
         refreshDataFromNetwork()
     }
 
-    private fun refreshDataFromNetwork() {
+    fun refreshDataFromNetwork(loadForced:Boolean = false) {
         try {
             viewModelScope.launch(Dispatchers.Default){
                 withContext(Dispatchers.IO){
-                    val data = albumsRepository.refreshData()
+                    val data = albumsRepository.refreshData(loadForced)
                     _albums.postValue(data)
                 }
                 _eventNetworkError.postValue(false)
                 _isNetworkErrorShown.postValue(false)
             }
         } catch (e: Exception){
+            Log.d("Error", e.toString())
+            _eventNetworkError.value = true
+        }
+    }
+
+    fun getAlbumDetails(album: Album) {
+        try {
+            viewModelScope.launch (Dispatchers.Default) {
+                withContext(Dispatchers.IO) {
+                    var albumDetails = albumsRepository.getAlbum(album)
+                    if (albumDetails != null) {
+                        _albumDetails.postValue(albumDetails!!)
+                    }
+                }
+            }
+        } catch (e: Exception) {
             Log.d("Error", e.toString())
             _eventNetworkError.value = true
         }

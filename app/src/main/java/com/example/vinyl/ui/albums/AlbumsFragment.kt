@@ -56,8 +56,9 @@ class AlbumsFragment : Fragment() {
             }
         })
         albumsViewModel.eventNetworkError.observe(viewLifecycleOwner, Observer<Boolean> {
-                isNetworkError -> if(isNetworkError) onNetworkError()
+            isNetworkError -> if(isNetworkError) onNetworkError()
         })
+
         activity.actionBar?.title = getString(R.string.title_albums)
     }
 
@@ -71,6 +72,10 @@ class AlbumsFragment : Fragment() {
             Toast.makeText(activity, "Network Error", Toast.LENGTH_LONG).show()
             albumsViewModel.onNetworkErrorShown()
         }
+    }
+
+    fun loadAlbumDetails(album:Album) {
+        albumsViewModel.getAlbumDetails(album)
     }
 
     fun goToAlbumDetails(album: Album) {
