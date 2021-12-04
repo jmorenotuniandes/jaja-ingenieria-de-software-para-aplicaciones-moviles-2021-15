@@ -283,4 +283,21 @@ class NetworkServiceAdapter constructor(context: Context) {
     private fun getBgColor(index:Int): String {
         return if (index % 2 == 0) "#FFFFFF" else "#F1F1F1"
     }
+
+    suspend fun addAlbumToList(album:Album) = suspendCoroutine<Boolean> { cont ->
+        val bodyArgs = mutableMapOf("name" to album.name, "cover" to album.cover, "release" to album.releaseDate,
+        "description" to album.description, "gender" to album.gender, "record" to album.recordLabel)
+        val body = JSONObject(bodyArgs as Map<*, *>?)
+        requestQueue.add(
+            postRequest("albums/${album.albumId}/tracks",
+                body,
+                { response ->
+                    cont.resume(true)
+                },
+                {
+                    cont.resumeWithException(it)
+                }
+            )
+        )
+    }
 }

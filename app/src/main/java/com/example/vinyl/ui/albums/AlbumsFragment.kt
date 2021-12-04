@@ -60,6 +60,10 @@ class AlbumsFragment : Fragment() {
         })
 
         activity.actionBar?.title = getString(R.string.title_albums)
+
+        binding.addNewAlbumCardBtn.setOnClickListener {
+            findNavController().navigate(AlbumsFragmentDirections.actionNavigationAlbumsToAddAlbumFragment())
+        }
     }
 
     override fun onDestroyView() {
