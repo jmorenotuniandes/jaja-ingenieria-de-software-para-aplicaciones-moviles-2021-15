@@ -19,6 +19,7 @@
     <string name="song_name">Song Name</string>
     <string name="song_duration">Song Duration</string>
     <string name="title_fragment_add_song">Add a new song</string>
+    <string name="title_fragment_add_album">Add a new album</string>
     <string name="save">Save</string>
     <!-- Agregar álbum -->
     <string name="album_name">Album Name</string>

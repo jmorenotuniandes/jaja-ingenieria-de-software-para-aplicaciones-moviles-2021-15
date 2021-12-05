@@ -83,9 +83,11 @@
         tools:layout="@layout/fragment_track_to_album">
         <argument android:name="album" app:argType="com.example.vinyl.model.dto.Album" />
     </fragment>
+
     <fragment
         android:id="@+id/addAlbumFragment"
         android:name="com.example.vinyl.ui.albums.AddAlbumFragment"
-        android:label="add_album_fragment"
-        tools:layout="@layout/add_album_fragment" />
+        android:label="@string/title_fragment_add_album"
+        tools:layout="@layout/add_album_fragment">
+    </fragment>
 </navigation>

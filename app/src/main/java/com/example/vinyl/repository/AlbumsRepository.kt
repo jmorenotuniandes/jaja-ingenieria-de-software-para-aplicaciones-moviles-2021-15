@@ -79,4 +79,8 @@ class AlbumsRepository (val application: Application) {
     suspend fun addSongToAlbum(song: Song, album:Album) {
         NetworkServiceAdapter.getInstance(application).addSongToAlbum(song, album)
     }
+
+    suspend fun addAlbum(album:Album) {
+        NetworkServiceAdapter.getInstance(application).addAlbum(album)
+    }
 }

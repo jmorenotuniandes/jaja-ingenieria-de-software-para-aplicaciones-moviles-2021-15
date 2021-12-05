@@ -99,7 +99,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
-                android:id="@+id/btn_add_song_album"
+                android:id="@+id/btn_add_album"
                 android:layout_width="182dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
