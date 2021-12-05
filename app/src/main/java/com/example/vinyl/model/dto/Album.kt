@@ -12,7 +12,7 @@ data class Album (
     val cover:String? = null,
     val releaseDate:String? = null,
     val description:String? = null,
-    val gender:String? = null,
+    val genre:String? = null,
     val recordLabel:String? = null,
     val bgColor: String? = null,
     val songs: List<Song>,

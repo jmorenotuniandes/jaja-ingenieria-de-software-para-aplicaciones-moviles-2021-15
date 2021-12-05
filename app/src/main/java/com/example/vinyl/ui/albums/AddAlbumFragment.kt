@@ -96,7 +96,7 @@ class AddAlbumFragment : Fragment() {
             cover = binding.txtAddAlbumCover.text.toString(),
             releaseDate = binding.txtAddAlbumCalendar.text.toString(),
             description = binding.txtAddAlbumDescription.text.toString(),
-            gender = binding.txtAddAlbumGender.text.toString(),
+            genre = binding.txtAddAlbumGender.text.toString(),
             recordLabel = binding.txtAddAlbumRecordLabel.text?.toString(),
             songs = mutableListOf<Song>(),
         )
@@ -110,7 +110,7 @@ class AddAlbumFragment : Fragment() {
             return
         }
 
-        if (newAlbum.gender !in genres){
+        if (newAlbum.genre !in genres){
             Toast.makeText(activity, "The genre is not support", Toast.LENGTH_LONG).show()
             return
         }
