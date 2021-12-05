@@ -18,6 +18,8 @@ import kotlin.coroutines.suspendCoroutine
 class NetworkServiceAdapter constructor(context: Context) {
     companion object {
         const val BASE_URL = "https://back-vinyls-populated.herokuapp.com/"
+        // const val BASE_URL = "https://back-vynils-jsvanegaso.herokuapp.com/"
+
         private var instance: NetworkServiceAdapter? = null
         fun getInstance(context: Context) =
             instance ?: synchronized(this) {
@@ -125,18 +127,66 @@ class NetworkServiceAdapter constructor(context: Context) {
         requestQueue.add(getRequest("albums/$albumId",
             { response ->
                 val albumObject = JSONObject(response)
+                val songs = mutableListOf<Song>()
+                val jsonSongs = albumObject.getJSONArray("tracks")
+                for (i in 0 until jsonSongs.length()) {
+                    val track = jsonSongs.getJSONObject(i)
+                    songs.add(Song(
+                        name = track.getString("name"),
+                        duration = track.getString("duration")
+                    ))
+                }
+
                 val album = Album(
                     albumId= albumObject.getInt("id"),
                     name = albumObject.getString("name"),
                     description=albumObject.getString("description"),
                     releaseDate= albumObject.getString("releaseDate").take(4),
-                    songs = mutableListOf<Song>()
+                    songs = songs
                 )
                 cont.resume(album)
             },
             {
                 cont.resumeWithException(it)
             }))
+    }
+
+    suspend fun addSongToAlbum(song: Song, album:Album) = suspendCoroutine<Boolean> { cont ->
+        val bodyArgs = mutableMapOf("name" to song.name, "duration" to song.duration)
+        val body = JSONObject(bodyArgs as Map<*, *>?)
+        requestQueue.add(
+            postRequest("albums/${album.albumId}/tracks",
+                body,
+                { response ->
+                    cont.resume(true)
+                },
+                {
+                    cont.resumeWithException(it)
+                }
+            )
+        )
+    }
+
+    suspend fun addAlbum(album:Album) = suspendCoroutine<Boolean> { cont ->
+        val bodyArgs = mutableMapOf("name" to album.name,
+            "cover" to album.cover,
+            "releaseDate" to album.releaseDate,
+            "description" to album.description,
+            "genre" to album.genre,
+            "recordLabel" to album.recordLabel)
+        val body = JSONObject(bodyArgs as Map<*, *>?)
+        requestQueue.add(
+            postRequest("albums",
+                body,
+                { response ->
+                    cont.resume(true)
+                    Log.d("Se guardó con éxito!", response.toString())
+                },
+                {
+                    cont.resumeWithException(it)
+                }
+            )
+        )
     }
 
     suspend fun getArtists() = suspendCoroutine<List<Artist>>{cont ->

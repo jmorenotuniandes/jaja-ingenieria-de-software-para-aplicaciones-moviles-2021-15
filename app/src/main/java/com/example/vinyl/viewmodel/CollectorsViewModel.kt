@@ -41,7 +41,7 @@ class CollectorsViewModel(application: Application) : AndroidViewModel(applicati
                     data.forEachIndexed{ index,collector ->
                         val albums = mutableListOf<Album>()
                         collector.collectorAlbums.forEachIndexed { index2, album ->
-                            albums.add(index2,  collectorRepository.refreshAlbumsDetailsData(album.albumId))
+                            albums.add(index2, collectorRepository.refreshAlbumsDetailsData(album.albumId))
                         }
                         data[index].collectorAlbums = albums
                         _collectors.postValue(data)

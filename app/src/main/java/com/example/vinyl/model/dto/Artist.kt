@@ -1,8 +1,10 @@
 package com.example.vinyl.model.dto
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
 @Parcelize
+@Serializable
 data class Artist(
     val id: Int,
     val name: String,
