@@ -5,7 +5,6 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.util.Log
 import com.example.vinyl.model.dto.Album
-import com.example.vinyl.model.dto.Artist
 import com.example.vinyl.model.dto.Song
 import com.example.vinyl.model.network.CacheManager
 import com.example.vinyl.model.network.NetworkServiceAdapter
@@ -78,5 +77,9 @@ class AlbumsRepository (val application: Application) {
 
     suspend fun addSongToAlbum(song: Song, album:Album) {
         NetworkServiceAdapter.getInstance(application).addSongToAlbum(song, album)
+    }
+
+    suspend fun addAlbum(album:Album) {
+        NetworkServiceAdapter.getInstance(application).addAlbum(album)
     }
 }
