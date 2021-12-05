@@ -167,6 +167,28 @@ class NetworkServiceAdapter constructor(context: Context) {
         )
     }
 
+    suspend fun addAlbum(album:Album) = suspendCoroutine<Boolean> { cont ->
+        val bodyArgs = mutableMapOf("name" to album.name,
+            "cover" to album.cover,
+            "releaseDate" to album.releaseDate,
+            "description" to album.description,
+            "genre" to album.genre,
+            "recordLabel" to album.recordLabel)
+        val body = JSONObject(bodyArgs as Map<*, *>?)
+        requestQueue.add(
+            postRequest("albums",
+                body,
+                { response ->
+                    cont.resume(true)
+                    Log.d("Se guardó con éxito!", response.toString())
+                },
+                {
+                    cont.resumeWithException(it)
+                }
+            )
+        )
+    }
+
     suspend fun getArtists() = suspendCoroutine<List<Artist>>{cont ->
         requestQueue.add(
             getRequest("musicians",
