@@ -11,9 +11,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.vinyl.viewmodel.AddAlbumViewModel
 import com.example.vinyl.databinding.AddAlbumFragmentBinding
 import com.example.vinyl.model.dto.Album
-import com.example.vinyl.model.dto.Artist
 import com.example.vinyl.model.dto.Song
-import com.example.vinyl.ui.artists.ArtistsFragmentDirections
+import com.example.vinyl.viewmodel.AlbumsViewModel
 
 class AddAlbumFragment : Fragment() {
 
@@ -23,7 +22,8 @@ class AddAlbumFragment : Fragment() {
     private val genres = listOf("Classical", "Salsa", "Rock", "Folk")
     private val recordLabels = listOf("Sony Music", "EMI", "Discos Fuentes", "Elektra", "Fania Record")
 
-    private lateinit var albumsViewModel: AddAlbumViewModel
+    private lateinit var addAlbumViewModel: AddAlbumViewModel
+    private lateinit var albumViewModel: AlbumsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,29 +45,31 @@ class AddAlbumFragment : Fragment() {
         val activity = requireNotNull(this.activity) {
             "You can only access the viewModel after onActivityCreated()"
         }
-        albumsViewModel = ViewModelProvider(this, AddAlbumViewModel.Factory(activity.application))
+        addAlbumViewModel = ViewModelProvider(this, AddAlbumViewModel.Factory(activity.application))
             .get(AddAlbumViewModel::class.java)
+        albumViewModel = ViewModelProvider(this, AlbumsViewModel.Factory(activity.application))
+            .get(AlbumsViewModel::class.java)
 
-        albumsViewModel.eventNetworkError.observe(viewLifecycleOwner, {
+        addAlbumViewModel.eventNetworkError.observe(viewLifecycleOwner, {
                 isNetworkError -> if (isNetworkError) onNetworkError()
         })
 
-        albumsViewModel.eventNetworkSuccess.observe(viewLifecycleOwner, {
+        addAlbumViewModel.eventNetworkSuccess.observe(viewLifecycleOwner, {
                 isSuccess -> if (isSuccess) onSubmitSuccess()
         })
     }
 
     private fun onNetworkError() {
-        if(!albumsViewModel.isNetworkErrorShown.value!!) {
+        if(!addAlbumViewModel.isNetworkErrorShown.value!!) {
             Toast.makeText(activity, "Network Error", Toast.LENGTH_LONG).show()
-            albumsViewModel.onNetworkErrorShown()
+            addAlbumViewModel.onNetworkErrorShown()
         }
     }
 
     private fun onSubmitSuccess() {
-        if(!albumsViewModel.isSuccessShown.value!!) {
+        if(!addAlbumViewModel.isSuccessShown.value!!) {
             Toast.makeText(activity, "Album Saved", Toast.LENGTH_LONG).show()
-            albumsViewModel.onSuccessShown()
+            addAlbumViewModel.onSuccessShown()
             binding.txtAddAlbumName.text?.clear()
             binding.txtAddAlbumCover.text?.clear()
             binding.txtAddAlbumCalendar.text?.clear()
@@ -117,10 +119,11 @@ class AddAlbumFragment : Fragment() {
             Toast.makeText(activity, "The recordLabels is not support", Toast.LENGTH_LONG).show()
             return
         }
-        albumsViewModel.postAlbum(newAlbum)
+        addAlbumViewModel.postAlbum(newAlbum)
     }
 
     private fun goToAlbums() {
+        albumViewModel.refreshDataFromNetwork(true)
         findNavController()
             .navigate(AddAlbumFragmentDirections.actionCreateAlbumToAlbums())
     }
