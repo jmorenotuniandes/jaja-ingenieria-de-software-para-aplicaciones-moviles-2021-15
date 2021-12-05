@@ -7,15 +7,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.example.vinyl.viewmodel.AddAlbumViewModel
 import com.example.vinyl.databinding.AddAlbumFragmentBinding
 import com.example.vinyl.model.dto.Album
+import com.example.vinyl.model.dto.Artist
 import com.example.vinyl.model.dto.Song
+import com.example.vinyl.ui.artists.ArtistsFragmentDirections
 
 class AddAlbumFragment : Fragment() {
 
     private var _binding: AddAlbumFragmentBinding? = null
     private val binding get() = _binding!!
+    private fun getPattern() = """\d{4}\-(0[1-9]|1[0-2])-(0[1-9]|1[0-9]|2[0-9]|3[0-1])"""
+    private val genres = listOf("Classical", "Salsa", "Rock", "Folk")
+    private val recordLabels = listOf("Sony Music", "EMI", "Discos Fuentes", "Elektra", "Fania Record")
 
     private lateinit var albumsViewModel: AddAlbumViewModel
 
@@ -69,6 +75,7 @@ class AddAlbumFragment : Fragment() {
             binding.txtAddAlbumGender.text?.clear()
             binding.txtAddAlbumRecordLabel.text?.clear()
             binding.txtAddAlbumName.requestFocus()
+            goToAlbums()
         }
     }
 
@@ -91,6 +98,30 @@ class AddAlbumFragment : Fragment() {
             recordLabel = binding.txtAddAlbumRecordLabel.text?.toString(),
             songs = mutableListOf<Song>(),
         )
+        if (newAlbum.name.isEmpty() || newAlbum.cover?.isEmpty()!! || newAlbum.description?.isEmpty()!!){
+            Toast.makeText(activity, "The data should not be empty", Toast.LENGTH_LONG).show()
+            return
+        }
+
+        if (!newAlbum.releaseDate!!?.matches(getPattern().toRegex())){
+            Toast.makeText(activity, "The release date not apply the format yyyy-mm-dd", Toast.LENGTH_LONG).show()
+            return
+        }
+
+        if (newAlbum.gender !in genres){
+            Toast.makeText(activity, "The genre is not support", Toast.LENGTH_LONG).show()
+            return
+        }
+
+        if (newAlbum.recordLabel !in recordLabels){
+            Toast.makeText(activity, "The recordLabels is not support", Toast.LENGTH_LONG).show()
+            return
+        }
         albumsViewModel.postAlbum(newAlbum)
+    }
+
+    private fun goToAlbums() {
+        findNavController()
+            .navigate(AddAlbumFragmentDirections.actionCreateAlbumToAlbums())
     }
 }

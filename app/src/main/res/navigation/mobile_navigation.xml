@@ -89,5 +89,9 @@
         android:name="com.example.vinyl.ui.albums.AddAlbumFragment"
         android:label="@string/title_fragment_add_album"
         tools:layout="@layout/add_album_fragment">
+
+        <action
+            android:id="@+id/action_create_album_to_albums"
+            app:destination="@id/navigation_albums" />
     </fragment>
 </navigation>

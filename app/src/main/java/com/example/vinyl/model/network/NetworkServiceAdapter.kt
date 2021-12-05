@@ -180,9 +180,7 @@ class NetworkServiceAdapter constructor(context: Context) {
                 body,
                 { response ->
                     cont.resume(true)
-                    println("")
-                    println("Se guardó con éxito!")
-                    println(response.toString())
+                    Log.d("Se guardó con éxito!", response.toString())
                 },
                 {
                     cont.resumeWithException(it)

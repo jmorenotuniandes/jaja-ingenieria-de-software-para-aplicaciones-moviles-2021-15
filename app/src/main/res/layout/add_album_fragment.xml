@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:drawableEnd="@android:drawable/ic_menu_my_calendar"
                 android:ems="10"
-                android:hint="@string/dd_mm_yyyy"
+                android:hint="@string/yyyy_mm_dd"
                 android:inputType="date" />
 
             <com.google.android.material.textfield.TextInputLayout

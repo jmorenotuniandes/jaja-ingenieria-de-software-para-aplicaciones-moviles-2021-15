@@ -26,6 +26,7 @@
     <string name="cover">Cover</string>
     <string name="release_date">Release Date</string>
     <string name="dd_mm_yyyy">dd/mm/yyyy</string>
+    <string name="yyyy_mm_dd">yyyy-mm-dd</string>
     <string name="description">Description</string>
     <string name="gender">Gender</string>
     <string name="record_label">Record Label</string>
