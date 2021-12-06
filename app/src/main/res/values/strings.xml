@@ -12,4 +12,23 @@
     <string name="album_detail_cover_title">album detail cover</string>
     <string name="title_songs">Canciones</string>
     <string name="album_detail">Album Detail</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_track_to_album_title">Add Song to Album</string>
+    <string name="add_track_to_album_desc">You will add a song to the album</string>
+    <string name="song_name">Song Name</string>
+    <string name="song_duration">Song Duration</string>
+    <string name="title_fragment_add_song">Add a new song</string>
+    <string name="title_fragment_add_album">Add a new album</string>
+    <string name="save">Save</string>
+    <!-- Agregar álbum -->
+    <string name="album_name">Album Name</string>
+    <string name="cover">Cover</string>
+    <string name="release_date">Release Date</string>
+    <string name="dd_mm_yyyy">dd/mm/yyyy</string>
+    <string name="yyyy_mm_dd">yyyy-mm-dd</string>
+    <string name="description">Description</string>
+    <string name="gender">Gender</string>
+    <string name="record_label">Record Label</string>
+
 </resources>
