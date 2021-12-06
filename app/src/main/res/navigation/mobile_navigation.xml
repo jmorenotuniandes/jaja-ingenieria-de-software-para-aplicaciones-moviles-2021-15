@@ -36,6 +36,7 @@
         <action
             android:id="@+id/action_albums_to_albums_details"
             app:destination="@id/navigation_albums_details" />
+
         <action
             android:id="@+id/action_navigation_albums_to_addAlbumFragment"
             app:destination="@id/addAlbumFragment" />

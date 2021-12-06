@@ -89,13 +89,11 @@ class AlbumDetailsFragment : Fragment() {
                 )
                 .into(binding.albumDetailsCover)
         }
-
         addTrackButton.setOnClickListener(View.OnClickListener {
             findNavController()
                 .navigate(AlbumDetailsFragmentDirections.actionNavigationAlbumsDetailsToTrackToAlbumFragment(album))
         })
     }
-
     override fun onDestroy() {
         super.onDestroy()
         _binding = null

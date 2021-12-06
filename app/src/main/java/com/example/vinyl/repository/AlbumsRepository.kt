@@ -37,7 +37,6 @@ class AlbumsRepository (val application: Application) {
             addAlbums(albums)
             return albums
         }
-
         var albums = getAlbums()
         return if(albums.isNullOrEmpty()){
             val cm = application.baseContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
